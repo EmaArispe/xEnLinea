@@ -1,19 +1,29 @@
 class Circle extends Figure{
-    constructor(posX,posY,fill,context,radius){
-        super(posX,posY,fill,context);
-        this.radius = radius; 
-    }
-    
 
+    #radius
+    #img
+
+    constructor(posX,posY,fill,context,radius,img){
+        super(posX,posY,fill,context);
+        this.#radius = radius; 
+        this.#img = img;
+    }
+ 
+    get img(){return this.#img;}
+    set img(img){this.#img = img;}
     
-    getRadius(){return this.radius;}
+    get radius(){return this.#radius;}
     
     draw(){
         super.draw();
         this.context.beginPath();
-        this.context.arc(this.posX, this.posY, this.radius, 0, 2 * Math.PI);
-        this.context.fill();
+        this.context.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2);
+        this.context.stroke();
         this.context.closePath();
+        this.context.save();
+        this.context.clip();
+        this.context.drawImage(this.img, this.posX - this.radius, this.posY - this.radius, this.radius * 2, this.radius * 2);
+        this.context.restore();
     }
 
     isPointInsided(x,y){

@@ -75,12 +75,21 @@ function randomRGB() {
 }
 
 
+let imgRobocop = new Image();
+    imgRobocop.src = '/robocop.jpg';
+    imgRobocop.onload;
+
+    let imgIroman = new Image();
+    imgIroman.src = '/iroman.jpg';
+    imgIroman.onload;
+
+
 function loadCircle(){
 
 let heightPartial = 550;
 for (let i = 0; i < 10; i++){
-    let c = new Circle(marginBoard/2, heightPartial,randomRGB(), ctx, 20);
-    heightPartial = heightPartial - 10;
+    let c = new Circle(marginBoard/2, heightPartial,randomRGB(), ctx, 30,imgRobocop);
+    heightPartial = heightPartial - 20;
     figuras.push(c);
     c.draw();
 }
@@ -88,8 +97,8 @@ for (let i = 0; i < 10; i++){
 heightPartial = 550;
 
 for (let i = 0; i < 10; i++){
-    let c = new Circle(marginBoard + 630 + marginBoard/2, heightPartial,randomRGB(), ctx, 20);
-    heightPartial = heightPartial - 10;
+    let c = new Circle(marginBoard + 630 + marginBoard/2, heightPartial,randomRGB(), ctx, 30, imgIroman);
+    heightPartial = heightPartial - 20;
     figuras.push(c);
     c.draw();
 }
@@ -106,6 +115,9 @@ function isCircle(e){
         }
     }
 }
+
+
+
 
 
 
