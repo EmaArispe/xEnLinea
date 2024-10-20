@@ -1,5 +1,8 @@
 "use strict";
 
+document.addEventListener("DOMContentLoaded", init);
+
+function init(){
 //inicio de canvas
 let canvas = document.querySelector('#canvas'); 
 let ctx = canvas.getContext("2d");
@@ -77,11 +80,11 @@ function randomRGB() {
 
 let imgRobocop = new Image();
     imgRobocop.src = '/robocop.jpg';
-    imgRobocop.onload;
+
 
     let imgIroman = new Image();
     imgIroman.src = '/iroman.jpg';
-    imgIroman.onload;
+
 
 
 function loadCircle(){
@@ -117,7 +120,7 @@ function isCircle(e){
 }
 
 
-
+}
 
 
 

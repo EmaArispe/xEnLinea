@@ -15,7 +15,6 @@ class Circle extends Figure{
     get radius(){return this.#radius;}
     
     draw(){
-        super.draw();
         this.context.beginPath();
         this.context.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2);
         this.context.stroke();
