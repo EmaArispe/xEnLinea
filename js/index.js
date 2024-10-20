@@ -8,8 +8,6 @@ let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext("2d");
 const width = canvas.width;
 const height = canvas.height;
-const marginBoard = (width - (7*90)) /2;
-const marginSupBoard = (height - 6*90);
 
 let figuras = [];
 
@@ -20,9 +18,36 @@ const backgroudCanvas = '#9B9B9B'
 
 let mousedown = null;
 
-let board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,630,550);
+//INICIALIZACION DE JUEGO //recibe que tipo de juego (y setea tamanios)
+let selectGame = document.querySelector('.select-game');
+let typeGame4 = document.querySelector('#four');//toma la seleccion del tamanio de juego
+let typeGame5 = document.querySelector('#five');
+let typeGame6 = document.querySelector('#six');
 
-board.draw();
+//eventos de creacion de juegos segun clickeo
+typeGame4.addEventListener('click',()=>{
+    selectGame.classList.add("hidden");
+    board.draw();
+    loadCircle();
+});
+
+typeGame5.addEventListener('click',()=>{
+    selectGame.classList.add("hidden");
+    board.draw();
+    loadCircle();
+});
+
+typeGame6.addEventListener('click',()=>{
+    selectGame.classList.add("hidden");
+    board.draw();
+    loadCircle();
+});
+
+
+const marginBoard = (width - (7*90)) /2;//seteos de tamanio de tablero
+const marginSupBoard = (height - 6*90);
+
+let board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,630,550);
 
 
 canvas.addEventListener('mousedown', (e)=>{
@@ -108,8 +133,6 @@ for (let i = 0; i < 10; i++){
 
 }
 
-
-loadCircle();
 
 function isCircle(e){
     for(let i = 0; i < figuras.length; i++){

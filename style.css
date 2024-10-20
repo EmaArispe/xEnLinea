@@ -14,3 +14,13 @@ canvas{
     justify-content: center;
     align-items: center;
 }
+
+.select-game{
+    position: absolute;
+    top: 40%;
+    left: 40%;
+}
+
+.hidden{
+    display: none;
+}
