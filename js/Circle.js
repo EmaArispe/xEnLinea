@@ -25,6 +25,7 @@ class Circle extends Figure{
         this.context.restore();
     }
 
+    //detecta si el puntero esta dentro de la superficie del circulo
     isPointInsided(x,y){
         let _x = this.posX - x;
         let _y = this.posY - y;

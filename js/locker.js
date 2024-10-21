@@ -17,7 +17,7 @@ class Locker extends Figure {
 
     getPosX(){return this.posX;}
     getPosY(){return this.posY;}
-    getisEmpty(){return this.isEmpty;}
+    getIsEmpty(){return this.isEmpty;}
     getHigth(){return this.width;}
     getWidth(){return this.height;}
 

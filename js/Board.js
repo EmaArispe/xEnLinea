@@ -27,8 +27,13 @@ class Board extends Figure{
             this.lockers[i] = []; // Inicializamos cada fila como un arreglo
             for (let j = 0; j < columns; j++) {
               // Instanciamos un nuevo objeto para cada posición
-              this.lockers[i][j] = new Locker(x+widthLoker, y+heightLocker,"#ff0000",this.context, true, widthLoker, heightLocker);
-              x+=widthLoker+marginX;
+                if(i===0){
+                    this.lockers[i][j] = new LokerReceptor(x+widthLoker, y+heightLocker,"#fafafa",this.context, false, widthLoker, heightLocker,j);  
+                    x+=widthLoker+marginX;
+                }else{
+                    this.lockers[i][j] = new Locker(x+widthLoker, y+heightLocker,"#ff0000",this.context, true, widthLoker, heightLocker);
+                    x+=widthLoker+marginX;
+                }
             }
             x = this.posX-widthLoker+(widthBoard/2)-(widthTablero/2);
             y+=heightLocker+marginY;
@@ -53,5 +58,35 @@ class Board extends Figure{
     setHeigth(height){
         this.heigth=height;
     }
+
+
+    //devuelve un casillero si una ficha se para sobre alguno de los receptores, sino null.
+    isAnyLockerPointInsided(x,y){
+        for(let i=0; i<this.lockers[0].length;i++){
+            if(this.lockers[0][i].isPointInsided(x,y)){
+                return this.lockers[0][i];
+            }
+        }
+        return null;
+    }
+
+
+    //metodo que devuelva casillero segun columna a la que se quiere ubicar una ficha.
+    getLokerEmptyInColumn(column,rows){
+
+        for(let i = rows-1 ; i > 0; i--){
+
+            if(this.lockers[i][column].getIsEmpty()){
+                return this.lockers[i][column];
+            }
+        
+        }
+        return null;
+    }
+
+    getRows(){//harcodeado OJOTA
+        return 7;
+    }
+
     
 }

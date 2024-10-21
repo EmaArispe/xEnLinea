@@ -87,7 +87,33 @@ canvas.addEventListener('mousedown', (e)=>{
 
 
 canvas.addEventListener('mouseup', (e)=>{
+
                         if(mousedown != null){
+                            //buscar el casillero receptor
+                            let casilleroReceptor = board.isAnyLockerPointInsided(getX(e),getY(e));
+                            //si encontro casillero receptor busca la columna
+                            if(casilleroReceptor!=null){                    
+                                console.log("tamoactivo");
+                                let casilleroEmpty = board.getLokerEmptyInColumn(casilleroReceptor.getColumn(),board.getRows());
+                                //si hay lugar
+                                if(casilleroEmpty!=null){
+                                    mousedown.setPosX(casilleroEmpty.getPosX()+32.5);
+                                    mousedown.setPosY(casilleroEmpty.getPosY()+32.5);
+                                    casilleroEmpty.setIsEmpty(false);
+                                    drawAll();
+                                }else{
+                                    console.log("esta completo");
+                                    mousedown.setPosX(500);
+                                    mousedown.setPosY(500);
+                                    drawAll();
+                                }
+
+                            }else{
+                                console.log("notamoactivo");
+                                mousedown.setPosX(500);
+                                mousedown.setPosY(500);
+                                drawAll();
+                            }
                             mousedown = null;
                         }
                     });
@@ -99,6 +125,7 @@ canvas.addEventListener('mousemove', (e)=>{
                             drawAll();                           
                         }
                     });
+
 
 function drawAll(){
     clearCanvas();
@@ -115,12 +142,15 @@ function getX(event){
 function getY(event){
     return event.clientY - rect.top;
 }
+
+
 //borrar canvas
 function clearCanvas(){
     ctx.fillStyle = backgroudCanvas;
     ctx.fillRect(0,0,width,height);
 }
 
+//colores aleatorios
 function randomRGB() {
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
@@ -129,6 +159,7 @@ function randomRGB() {
 }
 
 
+//carga de imagenes
 let imgRobocop = new Image();
     imgRobocop.src = '/robocop.jpg';
 
@@ -136,8 +167,7 @@ let imgRobocop = new Image();
     let imgIroman = new Image();
     imgIroman.src = '/iroman.jpg';
 
-
-
+//carga de circulos en tablero
 function loadCircle(){
 
 let heightPartial = 550;
