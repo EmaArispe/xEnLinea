@@ -15,6 +15,13 @@ const marginx = 50;
 const rect = canvas.getBoundingClientRect()//constante para tomar distancia y calcular x/y
 const backgroudCanvas = '#9B9B9B'
 
+//dimensiones board
+const widthBoard=820;
+const heightBoard=600;
+const marginBoard = (width-widthBoard)/2;
+const marginSupBoard = height-heightBoard;
+
+
 
 let mousedown = null;
 
@@ -28,12 +35,9 @@ let typeGame7 = document.querySelector('#seven');
 //eventos de creacion de juegos segun clickeo
 typeGame4.addEventListener('click',()=>{
     //selectGame.classList.add("hidden");
-    const marginBoard = (width - 800) /2;//seteos de tamanio de tablero
-    const marginSupBoard = (height - 600);
-    board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,800,600);
-    let columns = 7;
+    let columns = 8;
     let rows = 7;
-    board.createLokers(columns,rows);
+    board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
     loadCircle();
@@ -41,12 +45,9 @@ typeGame4.addEventListener('click',()=>{
 
 typeGame5.addEventListener('click',()=>{
     //selectGame.classList.add("hidden");
-    const marginBoard = (width - 800) /2;//seteos de tamanio de tablero
-    const marginSupBoard = (height - 600);
-    board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,800,600);
-    let columns = 9;
+    let columns = 10;
     let rows = 8;
-    board.createLokers(columns,rows);
+    board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
     loadCircle();
@@ -55,8 +56,8 @@ typeGame5.addEventListener('click',()=>{
 typeGame6.addEventListener('click',()=>{
     //selectGame.classList.add("hidden");
     let columns = 11;
-    let rows = 9;
-    board.createLokers(columns,rows);
+    let rows = 8;
+    board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
     loadCircle();
@@ -64,19 +65,15 @@ typeGame6.addEventListener('click',()=>{
 
 typeGame7.addEventListener('click',()=>{
     //selectGame.classList.add("hidden");
-    let columns = 13;
-    let rows = 11;
-    board.createLokers(columns,rows);
+    let columns = 12;
+    let rows = 8;
+    board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
     loadCircle();
 });
 
-
-const marginBoard = (width - 800) /2;//seteos de tamanio de tablero
-const marginSupBoard = (height - 600);
-
-let board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,800,600);
+let board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,widthBoard,heightBoard);
 
 
 canvas.addEventListener('mousedown', (e)=>{
@@ -154,7 +151,7 @@ for (let i = 0; i < 10; i++){
 heightPartial = 550;
 
 for (let i = 0; i < 10; i++){
-    let c = new Circle(marginBoard + 630 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgIroman);
+    let c = new Circle(marginBoard + 820 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgIroman);
     heightPartial = heightPartial - 20;
     figuras.push(c);
     c.draw();

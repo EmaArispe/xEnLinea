@@ -10,42 +10,38 @@ class Board extends Figure{
     }
     
     //creacion dinamica de lokers segun tamanioo juego
-    createLokers(columns,rows){
+    createLokers(columns,rows,widthBoard,heightBoard){
+        console.log(columns, rows)
+        let marginX = 3;
+        let marginY =3;
         this.lockers=[];
         let widthLoker = 65;//tamaño lokers segun cantidad fichas
         let heightLocker = 65;
-        console.log(widthLoker,heightLocker);
-        let x = this.posX-widthLoker;//pos coordenadas segun tamanio fichas
-        let y = this.posY-heightLocker;
+        let widthTablero= ((columns*(marginX+widthLoker)));
+        let heightTablero=((rows*(marginY+heightLocker)));
+        let x = this.posX-widthLoker+(widthBoard/2)-(widthTablero/2);//pos coordenadas segun tamanio fichas
+        let y = this.posY-heightLocker+(heightBoard/2)-(heightTablero/2);
+        
 
         for (let i = 0; i < rows; i++) {
             this.lockers[i] = []; // Inicializamos cada fila como un arreglo
             for (let j = 0; j < columns; j++) {
               // Instanciamos un nuevo objeto para cada posición
               this.lockers[i][j] = new Locker(x+widthLoker, y+heightLocker,"#ff0000",this.context, true, widthLoker, heightLocker);
-              x+=widthLoker;
+              x+=widthLoker+marginX;
             }
-            x = this.posX-widthLoker;
-            y+=heightLocker;
+            x = this.posX-widthLoker+(widthBoard/2)-(widthTablero/2);
+            y+=heightLocker+marginY;
           }
           console.log(this.lockers)
     }
-
-    /*createLokers(widthLoker,heightLocker){  QUEDA POR LAS DUDAS PARA PROBAR
-        this.lockers=[
-            [new Locker(this.posX+0, this.posY+0,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+0, this.posY+90,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+0, this.posY+180,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+0, this.posY+270,"#ff0000",this.context, true, widthLoker, heightLocker)],
-            [new Locker(this.posX+90, this.posY+0,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+90, this.posY+90,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+90, this.posY+180,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+90, this.posY+270,"#ff0000",this.context, true, widthLoker, heightLocker)],
-            [new Locker(this.posX+180, this.posY+0,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+180, this.posY+90,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+180, this.posY+180,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+180, this.posY+270,"#ff0000",this.context, true, widthLoker, heightLocker)],
-            [new Locker(this.posX+270, this.posY+0,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+270, this.posY+90,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+270, this.posY+180,"#ff0000",this.context, true, widthLoker, heightLocker),new Locker(this.posX+270, this.posY+270,"#ff0000",this.context, true, widthLoker, heightLocker)]
-        ];
-    }*/ 
     
     draw(){//va a recibir parametro tamanio de juego
         super.draw();
         this.context.fillRect(this.posX,this.posY,this.width,this.height);
         console.log(this.posX, this.posY);
         for(let i = 0; i < this.lockers.length;i++){
-            for(let j = 0; j<this.lockers.length;j++){
+            for(let j = 0; j<this.lockers[i].length;j++){
                 this.lockers[i][j].draw();
             }
         }
