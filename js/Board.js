@@ -12,8 +12,8 @@ class Board extends Figure{
     //creacion dinamica de lokers segun tamanioo juego
     createLokers(columns,rows){
         this.lockers=[];
-        let widthLoker = this.width/columns;//tamaño lokers segun cantidad fichas
-        let heightLocker = this.height/rows;
+        let widthLoker = 65;//tamaño lokers segun cantidad fichas
+        let heightLocker = 65;
         console.log(widthLoker,heightLocker);
         let x = this.posX-widthLoker;//pos coordenadas segun tamanio fichas
         let y = this.posY-heightLocker;
@@ -42,7 +42,7 @@ class Board extends Figure{
     
     draw(){//va a recibir parametro tamanio de juego
         super.draw();
-        //this.context.fillRect(this.posX,this.posY,this.width,this.height);
+        this.context.fillRect(this.posX,this.posY,this.width,this.height);
         console.log(this.posX, this.posY);
         for(let i = 0; i < this.lockers.length;i++){
             for(let j = 0; j<this.lockers.length;j++){

@@ -28,7 +28,7 @@ let typeGame7 = document.querySelector('#seven');
 //eventos de creacion de juegos segun clickeo
 typeGame4.addEventListener('click',()=>{
     //selectGame.classList.add("hidden");
-    const marginBoard = (width - 770) /2;//seteos de tamanio de tablero
+    const marginBoard = (width - 800) /2;//seteos de tamanio de tablero
     const marginSupBoard = (height - 600);
     board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,800,600);
     let columns = 7;
@@ -44,8 +44,8 @@ typeGame5.addEventListener('click',()=>{
     const marginBoard = (width - 800) /2;//seteos de tamanio de tablero
     const marginSupBoard = (height - 600);
     board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,800,600);
-    let columns = 16;
-    let rows = 12;
+    let columns = 9;
+    let rows = 8;
     board.createLokers(columns,rows);
     clearCanvas();
     board.draw();
@@ -54,8 +54,8 @@ typeGame5.addEventListener('click',()=>{
 
 typeGame6.addEventListener('click',()=>{
     //selectGame.classList.add("hidden");
-    let columns = 20;
-    let rows = 15;
+    let columns = 11;
+    let rows = 9;
     board.createLokers(columns,rows);
     clearCanvas();
     board.draw();
@@ -64,8 +64,8 @@ typeGame6.addEventListener('click',()=>{
 
 typeGame7.addEventListener('click',()=>{
     //selectGame.classList.add("hidden");
-    let columns = 32;
-    let rows = 24;
+    let columns = 13;
+    let rows = 11;
     board.createLokers(columns,rows);
     clearCanvas();
     board.draw();
@@ -78,7 +78,7 @@ const marginSupBoard = (height - 600);
 
 let board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,800,600);
 
-/*
+
 canvas.addEventListener('mousedown', (e)=>{
                         let figura = isCircle(e);
                         if(figura != null){
@@ -102,7 +102,7 @@ canvas.addEventListener('mousemove', (e)=>{
                             drawAll();                           
                         }
                     });
-*/
+
 function drawAll(){
     clearCanvas();
     board.draw();
@@ -145,7 +145,7 @@ function loadCircle(){
 
 let heightPartial = 550;
 for (let i = 0; i < 10; i++){
-    let c = new Circle(marginBoard/2, heightPartial,randomRGB(), ctx, 30,imgRobocop);
+    let c = new Circle(marginBoard/2, heightPartial,randomRGB(), ctx, 25,imgRobocop);
     heightPartial = heightPartial - 20;
     figuras.push(c);
     c.draw();
@@ -154,7 +154,7 @@ for (let i = 0; i < 10; i++){
 heightPartial = 550;
 
 for (let i = 0; i < 10; i++){
-    let c = new Circle(marginBoard + 630 + marginBoard/2, heightPartial,randomRGB(), ctx, 30, imgIroman);
+    let c = new Circle(marginBoard + 630 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgIroman);
     heightPartial = heightPartial - 20;
     figuras.push(c);
     c.draw();
