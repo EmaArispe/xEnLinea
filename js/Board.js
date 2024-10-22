@@ -6,12 +6,15 @@ class Board extends Figure{
         super(posX,posY,fill,context);
         this.width = width;
         this.height = height;
-        this.lockers = []; 
+        this.lockers = [];
+        this.columns = null;
+        this.rows = null;
     }
     
     //creacion dinamica de lokers segun tamanioo juego
     createLokers(columns,rows,widthBoard,heightBoard){
-        console.log(columns, rows)
+        this.columns=columns;
+        this.rows=rows;
         let marginX = 3;
         let marginY =3;
         this.lockers=[];
@@ -87,7 +90,11 @@ class Board extends Figure{
     }
 
     getRows(){//harcodeado OJOTA
-        return 7;
+        return this.rows;
+    }
+
+    getColumns(){
+        return this.columns;
     }
 
     
