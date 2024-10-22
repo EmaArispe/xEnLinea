@@ -5,9 +5,10 @@ class Figure{
         this.posY = posY;
         this.fill = fill;
         this.context = context;
-    }
+        this.startPosX = posX;
+        this.startPosY = posY;
 
-    setFill(fill){this.fill = fill;}
+    }
 
     getPosition(){
         return { x: this.getPosX(),
@@ -16,10 +17,21 @@ class Figure{
     }
 
     getPosY(){return this.posX;}
+    
     getPosX(){return this.posY;}
+    
     setPosY(newY){this.posY = newY;}
+    
     setPosX(newX){this.posX = newX;}
+    
+    //devuelven posicion donde se inicia la figura.
+    getStartPosX(){return this.startPosX;}
+
+    getStartPosY(){return this.startPosY;}
+    
     getFill(){return this.fill;}
+
+    setFill(fill){this.fill=fill;}
 
     draw(){
         this.context.fillStyle = this.fill;

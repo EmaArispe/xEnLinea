@@ -28,7 +28,7 @@ class Board extends Figure{
             for (let j = 0; j < columns; j++) {
               // Instanciamos un nuevo objeto para cada posición
                 if(i===0){
-                    this.lockers[i][j] = new LokerReceptor(x+widthLoker, y+heightLocker,"#fafafa",this.context, false, widthLoker, heightLocker,j);  
+                    this.lockers[i][j] = new LokerReceptor(x+widthLoker, y+heightLocker,"#FFFF00",this.context, false, widthLoker, heightLocker,j);  
                     x+=widthLoker+marginX;
                 }else{
                     this.lockers[i][j] = new Locker(x+widthLoker, y+heightLocker,"#ff0000",this.context, true, widthLoker, heightLocker);
@@ -69,6 +69,8 @@ class Board extends Figure{
         }
         return null;
     }
+
+    
 
 
     //metodo que devuelva casillero segun columna a la que se quiere ubicar una ficha.

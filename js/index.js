@@ -21,8 +21,6 @@ const heightBoard=600;
 const marginBoard = (width-widthBoard)/2;
 const marginSupBoard = height-heightBoard;
 
-
-
 let mousedown = null;
 
 //INICIALIZACION DE JUEGO //recibe que tipo de juego (y setea tamanios)
@@ -93,7 +91,6 @@ canvas.addEventListener('mouseup', (e)=>{
                             let casilleroReceptor = board.isAnyLockerPointInsided(getX(e),getY(e));
                             //si encontro casillero receptor busca la columna
                             if(casilleroReceptor!=null){                    
-                                console.log("tamoactivo");
                                 let casilleroEmpty = board.getLokerEmptyInColumn(casilleroReceptor.getColumn(),board.getRows());
                                 //si hay lugar
                                 if(casilleroEmpty!=null){
@@ -102,16 +99,19 @@ canvas.addEventListener('mouseup', (e)=>{
                                     casilleroEmpty.setIsEmpty(false);
                                     drawAll();
                                 }else{
-                                    console.log("esta completo");
-                                    mousedown.setPosX(500);
-                                    mousedown.setPosY(500);
+                                    //volver a posicion inicial
+                                    alert("esta lleno volver a intentar");
+                                    mousedown.setPosX(mousedown.startPosX);
+                                    mousedown.setPosY(mousedown.startPosY);
                                     drawAll();
                                 }
 
                             }else{
-                                console.log("notamoactivo");
-                                mousedown.setPosX(500);
-                                mousedown.setPosY(500);
+                                alert("no la posicion es incorrecta, volver a intentar");
+                                //volver a posicion inicial
+                                mousedown.setPosX(mousedown.startPosX);
+                                mousedown.setPosY(mousedown.startPosY);
+                                console.log(mousedown.startPosX + "  " + mousedown.startPosY);
                                 drawAll();
                             }
                             mousedown = null;
@@ -122,6 +122,15 @@ canvas.addEventListener('mousemove', (e)=>{
                         if(mousedown != null){
                             mousedown.setPosX(getX(e));
                             mousedown.setPosY(getY(e));
+                            //pintar o despintar si se pasa por los casilleros receptores
+                            for(let i=0; i<board.lockers[0].length;i++){
+                                if(board.lockers[0][i].isPointInsided(getX(e),getY(e))){
+                                    //console.log("estoy adentro del casillero ");
+                                    board.lockers[0][i].setFill("#000000");
+                                }else{
+                                    board.lockers[0][i].setFill("#FFFF00");
+                                }
+                            }
                             drawAll();                           
                         }
                     });
@@ -179,7 +188,6 @@ for (let i = 0; i < 10; i++){
 }
 
 heightPartial = 550;
-
 for (let i = 0; i < 10; i++){
     let c = new Circle(marginBoard + 820 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgIroman);
     heightPartial = heightPartial - 20;
