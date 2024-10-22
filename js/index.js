@@ -38,7 +38,7 @@ typeGame4.addEventListener('click',()=>{
     board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
-    loadCircle(21);
+    loadCircle(24);
     //let game = new Game("robocop","ironman",4);
 });
 
@@ -49,7 +49,7 @@ typeGame5.addEventListener('click',()=>{
     board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
-    loadCircle(36);
+    loadCircle(35);
     //let game = new Game("robocop","ironman",5);
 });
 
@@ -60,7 +60,7 @@ typeGame6.addEventListener('click',()=>{
     board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
-    loadCircle(40);
+    loadCircle(38);
     //let game = new Game("robocop","ironman",6);
 });
 
@@ -71,7 +71,7 @@ typeGame7.addEventListener('click',()=>{
     board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
-    loadCircle(44);
+    loadCircle(42);
     //let game = new Game("robocop","ironman",7);
 });
 
@@ -86,8 +86,7 @@ canvas.addEventListener('mousedown', (e)=>{
                         let figura = isCircle(e);
                         if(figura != null&&figura.isClickable()&&game.isTurn(figura.getPlayer())){
                             console.log("clickeada")
-                            mousedown = figura;
-                            
+                            mousedown = figura;  
                         }
                         drawAll();
                     });
@@ -97,6 +96,8 @@ canvas.addEventListener('mousedown', (e)=>{
 canvas.addEventListener('mouseup', (e)=>{
 
                         if(mousedown != null){
+                            console.log("figura soltada en x:"+ mousedown.getPosX());
+                            console.log("figura soltada en y:"+ mousedown.getPosY());
                             //buscar el casillero receptor
                             let casilleroReceptor = board.isAnyLockerPointInsided(getX(e),getY(e));
                             //si encontro casillero receptor busca la columna
@@ -104,6 +105,9 @@ canvas.addEventListener('mouseup', (e)=>{
                                 let casilleroEmpty = board.getLokerEmptyInColumn(casilleroReceptor.getColumn(),board.getRows());
                                 //si hay lugar
                                 if(casilleroEmpty!=null){
+                                    trasladarFicha(mousedown,casilleroEmpty);
+                                    //console.log("figura soltada en x:"+ mousedown.getPosX());
+                                    //console.log("figura soltada en y:"+ mousedown.getPosY());
                                     mousedown.setPosX(casilleroEmpty.getPosX()+32.5);
                                     mousedown.setPosY(casilleroEmpty.getPosY()+32.5);
                                     casilleroEmpty.setIsEmpty(false);
@@ -145,6 +149,60 @@ canvas.addEventListener('mousemove', (e)=>{
                         }
                     });
 
+function trasladarFicha(ficha,casillero){
+    let posXficha=ficha.getPosX();
+    let posYficha=ficha.getPosY();
+    let posXcasillero=casillero.getPosX()+32.5;
+    let posYcasillero=casillero.getPosY()+32.5;
+    let velocidad = 1; // velocidad de movimiento (en milisegundos)
+    
+    let intervaloX = setInterval(() => {
+        if (posXficha < posXcasillero) {
+            posXficha++; // incrementar la posición de la ficha
+            ficha.setPosX(posXficha); // actualizar la posición de la ficha
+            drawAll(); // redibujar todo
+        } else {
+            clearInterval(intervaloX); // detener el intervalo cuando la ficha llega al casillero
+        }
+    }, velocidad);
+
+    let intervaloY = setInterval(() => {
+        if (posYficha < posYcasillero) {
+            posYficha++; // incrementar la posición de la ficha
+            ficha.setPosY(posYficha); // actualizar la posición de la ficha
+            drawAll(); // redibujar todo
+        } else {
+            clearInterval(intervaloY); // detener el intervalo cuando la ficha llega al casillero
+        }
+    }, velocidad);
+
+    
+    /*
+    if(posXficha<posXcasillero){
+        for(let i=posXficha; i<posXcasillero;i++){
+            //setTimeout(900);
+            ficha.setPosX(i);
+            console.log(i+"X");
+            drawAll();
+        }
+    }else{
+        for(let i=posXficha; i>posXcasillero;i--){
+            //setTimeout(900);
+            ficha.setPosX(i);
+            console.log(i+"X");
+            drawAll();
+        }
+    }
+    for(let i=posYficha; i<posYcasillero;i++){
+        //setTimeout(900);
+        ficha.setPosY(i);
+        console.log(i+"Y");
+        drawAll();
+    };*/
+                   
+}
+
+
 
 function drawAll(){
     clearCanvas();
@@ -153,6 +211,8 @@ function drawAll(){
         element.draw();
     });
 }
+
+
 
 //pos x - y
 function getX(event){
@@ -216,9 +276,4 @@ function isCircle(e){
     }
 }
 
-
 }
-
-
-
-

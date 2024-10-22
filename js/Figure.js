@@ -16,9 +16,9 @@ class Figure{
         };
     }
 
-    getPosY(){return this.posX;}
+    getPosY(){return this.posY;}
     
-    getPosX(){return this.posY;}
+    getPosX(){return this.posX;}
     
     setPosY(newY){this.posY = newY;}
     

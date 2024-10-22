@@ -6,15 +6,14 @@ class LokerReceptor extends Locker{
     }
 
     draw(){
-        //this.fill="#FFFF00";
         super.draw();
     }
 
 
     //
     isPointInsided(x, y) {
-        return (x >= this.posX +5 && x <= this.posX +5 + this.width) &&
-               (y >= this.posY +5 && y <= this.posY + 5 + this.height);
+        return (x >= this.posX  && x <= this.posX  + this.width) &&
+               (y >= this.posY  && y <= this.posY  + this.height);
     }
 
     getColumn(){
