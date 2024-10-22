@@ -164,6 +164,7 @@ function trasladarFicha(ficha,casillero){
                 clearInterval(intervaloX); // detener el intervalo cuando la ficha llega al casillero
             }
         }, velocidad);
+
     }else if(posXficha>posXcasillero){
         let intervaloXiz = setInterval(() => {
             if (posXficha > posXcasillero) {
@@ -175,56 +176,56 @@ function trasladarFicha(ficha,casillero){
             }
         }, velocidad);
     }
-
-    let repeticiones=0;
-    let reboteY = posYcasillero-100;
-    let posYrebote = posYcasillero;
+    
     let intervaloY = setInterval(() => {
+        
         if (posYficha < posYcasillero) {
-            posYficha+=8; // incrementar la posición de la ficha
+            posYficha+=30; // incrementar la posición de la ficha
             ficha.setPosY(posYficha); // actualizar la posición de la ficha
             drawAll(); // redibujar todo
-        } else if(posYficha>=posYcasillero && repeticiones<3){
-            console.log("me pase en Y")
-            if(posYrebote>reboteY){
-                posYrebote--;
-            }
-            else{
-                posYrebote++;
-            }
-            //posYficha--;
-            ficha.setPosY(posYrebote);
-            drawAll();
-            repeticiones++;
-        }else {
+        } else {
+            rebote(ficha,posYficha,posYcasillero,posYcasillero-100);
             clearInterval(intervaloY); // detener el intervalo cuando la ficha llega al casillero
         }
     }, velocidad);
+                  
+}
 
-    
-    /*
-    if(posXficha<posXcasillero){
-        for(let i=posXficha; i<posXcasillero;i++){
-            //setTimeout(900);
-            ficha.setPosX(i);
-            console.log(i+"X");
-            drawAll();
-        }
-    }else{
-        for(let i=posXficha; i>posXcasillero;i--){
-            //setTimeout(900);
-            ficha.setPosX(i);
-            console.log(i+"X");
-            drawAll();
-        }
-    }
-    for(let i=posYficha; i<posYcasillero;i++){
-        //setTimeout(900);
-        ficha.setPosY(i);
-        console.log(i+"Y");
-        drawAll();
-    };*/
-                   
+
+function rebote(ficha,pos,buttom,top){
+    let sentido = true;
+    let position = buttom ;
+    let contador = 0;
+    let i = 0;
+    let intervalorebote= setInterval(()=>{
+            if(pos>=top&& sentido){
+                pos-=15;
+                ficha.setPosY(pos);
+                drawAll();
+                            
+            }else if(pos<buttom){
+                sentido=false;
+                pos+=5;
+                ficha.setPosY(pos);
+                drawAll();
+            }
+
+            if(pos == buttom){
+                sentido=true;
+                contador++;
+                top=top+40;
+                console.log(contador);
+            }
+            
+
+            if(contador >= 2){
+                clearInterval(intervalorebote);
+            }
+            
+        },10);
+        pos = position;
+        sentido=true;
+
 }
 
 
