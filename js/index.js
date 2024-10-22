@@ -106,10 +106,6 @@ canvas.addEventListener('mouseup', (e)=>{
                                 //si hay lugar
                                 if(casilleroEmpty!=null){
                                     trasladarFicha(mousedown,casilleroEmpty);
-                                    //console.log("figura soltada en x:"+ mousedown.getPosX());
-                                    //console.log("figura soltada en y:"+ mousedown.getPosY());
-                                    mousedown.setPosX(casilleroEmpty.getPosX()+32.5);
-                                    mousedown.setPosY(casilleroEmpty.getPosY()+32.5);
                                     casilleroEmpty.setIsEmpty(false);
                                     mousedown.setClickable(false);//se inabilita la ficha para que se mueva.
                                     game.changeTurn();//se cambia el turno
@@ -156,22 +152,51 @@ function trasladarFicha(ficha,casillero){
     let posYcasillero=casillero.getPosY()+32.5;
     let velocidad = 1; // velocidad de movimiento (en milisegundos)
     
-    let intervaloX = setInterval(() => {
-        if (posXficha < posXcasillero) {
-            posXficha++; // incrementar la posición de la ficha
-            ficha.setPosX(posXficha); // actualizar la posición de la ficha
-            drawAll(); // redibujar todo
-        } else {
-            clearInterval(intervaloX); // detener el intervalo cuando la ficha llega al casillero
-        }
-    }, velocidad);
 
+    if(posXficha<posXcasillero){
+
+        let intervaloX = setInterval(() => {
+            if (posXficha < posXcasillero) {
+                posXficha++; // incrementar la posición de la ficha
+                ficha.setPosX(posXficha); // actualizar la posición de la ficha
+                drawAll(); // redibujar todo
+            } else {
+                clearInterval(intervaloX); // detener el intervalo cuando la ficha llega al casillero
+            }
+        }, velocidad);
+    }else if(posXficha>posXcasillero){
+        let intervaloXiz = setInterval(() => {
+            if (posXficha > posXcasillero) {
+                posXficha--; // incrementar la posición de la ficha
+                ficha.setPosX(posXficha); // actualizar la posición de la ficha
+                drawAll(); // redibujar todo
+            } else {
+                clearInterval(intervaloXiz); // detener el intervalo cuando la ficha llega al casillero
+            }
+        }, velocidad);
+    }
+
+    let repeticiones=0;
+    let reboteY = posYcasillero-100;
+    let posYrebote = posYcasillero;
     let intervaloY = setInterval(() => {
         if (posYficha < posYcasillero) {
-            posYficha++; // incrementar la posición de la ficha
+            posYficha+=8; // incrementar la posición de la ficha
             ficha.setPosY(posYficha); // actualizar la posición de la ficha
             drawAll(); // redibujar todo
-        } else {
+        } else if(posYficha>=posYcasillero && repeticiones<3){
+            console.log("me pase en Y")
+            if(posYrebote>reboteY){
+                posYrebote--;
+            }
+            else{
+                posYrebote++;
+            }
+            //posYficha--;
+            ficha.setPosY(posYrebote);
+            drawAll();
+            repeticiones++;
+        }else {
             clearInterval(intervaloY); // detener el intervalo cuando la ficha llega al casillero
         }
     }, velocidad);
