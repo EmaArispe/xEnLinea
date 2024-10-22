@@ -76,8 +76,10 @@ let board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,widthBoard,heig
 
 canvas.addEventListener('mousedown', (e)=>{
                         let figura = isCircle(e);
-                        if(figura != null){
+                        if(figura != null&&figura.isClickable()){
+                            console.log("clickeada")
                             mousedown = figura;
+                            
                         }
                         drawAll();
                     });
@@ -97,6 +99,7 @@ canvas.addEventListener('mouseup', (e)=>{
                                     mousedown.setPosX(casilleroEmpty.getPosX()+32.5);
                                     mousedown.setPosY(casilleroEmpty.getPosY()+32.5);
                                     casilleroEmpty.setIsEmpty(false);
+                                    mousedown.setClickable(false);//se inabilita la ficha para que se mueva.
                                     drawAll();
                                 }else{
                                     //volver a posicion inicial

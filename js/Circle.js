@@ -7,6 +7,7 @@ class Circle extends Figure{
         super(posX,posY,fill,context);
         this.#radius = radius; 
         this.#img = img;
+        this.clickable=true;
     }
  
     get img(){return this.#img;}
@@ -33,6 +34,14 @@ class Circle extends Figure{
     }
 
     
+    setClickable(e){
+        this.clickable=e;
+    }
+
+    //devuelve si la ficha se puede clickear.
+    isClickable(){
+        return this.clickable;
+    }
 
     
 }
