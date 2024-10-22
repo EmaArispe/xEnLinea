@@ -39,6 +39,7 @@ typeGame4.addEventListener('click',()=>{
     clearCanvas();
     board.draw();
     loadCircle(21);
+    //let game = new Game("robocop","ironman",4);
 });
 
 typeGame5.addEventListener('click',()=>{
@@ -49,6 +50,7 @@ typeGame5.addEventListener('click',()=>{
     clearCanvas();
     board.draw();
     loadCircle(36);
+    //let game = new Game("robocop","ironman",5);
 });
 
 typeGame6.addEventListener('click',()=>{
@@ -59,6 +61,7 @@ typeGame6.addEventListener('click',()=>{
     clearCanvas();
     board.draw();
     loadCircle(40);
+    //let game = new Game("robocop","ironman",6);
 });
 
 typeGame7.addEventListener('click',()=>{
@@ -69,14 +72,19 @@ typeGame7.addEventListener('click',()=>{
     clearCanvas();
     board.draw();
     loadCircle(44);
+    //let game = new Game("robocop","ironman",7);
 });
 
 let board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,widthBoard,heightBoard);
+let game = new Game("robocop","ironman",7);
+let firstTurn=game.setFirstTurn()
+alert("el primero en jugar es :"+firstTurn);
+
 
 
 canvas.addEventListener('mousedown', (e)=>{
                         let figura = isCircle(e);
-                        if(figura != null&&figura.isClickable()){
+                        if(figura != null&&figura.isClickable()&&game.isTurn(figura.getPlayer())){
                             console.log("clickeada")
                             mousedown = figura;
                             
@@ -100,17 +108,16 @@ canvas.addEventListener('mouseup', (e)=>{
                                     mousedown.setPosY(casilleroEmpty.getPosY()+32.5);
                                     casilleroEmpty.setIsEmpty(false);
                                     mousedown.setClickable(false);//se inabilita la ficha para que se mueva.
+                                    game.changeTurn();//se cambia el turno
                                     drawAll();
                                 }else{
                                     //volver a posicion inicial
-                                    alert("esta lleno volver a intentar");
                                     mousedown.setPosX(mousedown.startPosX);
                                     mousedown.setPosY(mousedown.startPosY);
                                     drawAll();
                                 }
 
                             }else{
-                                alert("no la posicion es incorrecta, volver a intentar");
                                 //volver a posicion inicial
                                 mousedown.setPosX(mousedown.startPosX);
                                 mousedown.setPosY(mousedown.startPosY);
@@ -184,7 +191,7 @@ function loadCircle(cantFichas){
 
 let heightPartial = 550;
 for (let i = 0; i < cantFichas; i++){
-    let c = new Circle(marginBoard/2, heightPartial,randomRGB(), ctx, 25,imgRobocop);
+    let c = new Circle(marginBoard/2, heightPartial,randomRGB(), ctx, 25,imgRobocop,"robocop");
     heightPartial = heightPartial - 7;
     figuras.push(c);
     c.draw();
@@ -192,7 +199,7 @@ for (let i = 0; i < cantFichas; i++){
 
 heightPartial = 550;
 for (let i = 0; i < cantFichas; i++){
-    let c = new Circle(marginBoard + 820 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgIroman);
+    let c = new Circle(marginBoard + 820 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgIroman,"ironman");
     heightPartial = heightPartial - 7;
     figuras.push(c);
     c.draw();

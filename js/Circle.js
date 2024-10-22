@@ -3,11 +3,12 @@ class Circle extends Figure{
     #radius
     #img
 
-    constructor(posX,posY,fill,context,radius,img){
+    constructor(posX,posY,fill,context,radius,img,player){
         super(posX,posY,fill,context);
         this.#radius = radius; 
         this.#img = img;
         this.clickable=true;
+        this.player=player;
     }
  
     get img(){return this.#img;}
@@ -41,6 +42,11 @@ class Circle extends Figure{
     //devuelve si la ficha se puede clickear.
     isClickable(){
         return this.clickable;
+    }
+
+    //devuelve el nombre del jugador
+    getPlayer(){
+        return this.player;
     }
 
     

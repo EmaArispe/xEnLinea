@@ -97,5 +97,14 @@ class Board extends Figure{
         return this.columns;
     }
 
+
+    //metodo que averigue si alguien cumplio la combinacion (recibe parametro del tipo de juego/viene del index.    )
+    winner(jugador){
+        //let combinacion
+        //dfs
+        //buscar en la matriz si hay alguna combinacion 
+        return;
+        
+    }
     
 }
