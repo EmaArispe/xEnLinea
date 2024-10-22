@@ -99,11 +99,22 @@ class Board extends Figure{
 
 
     //metodo que averigue si alguien cumplio la combinacion (recibe parametro del tipo de juego/viene del index.    )
-    winner(jugador){
+    winner(){
+        let contador = 0;
+        let linea = 4;
+        for(let i =0; i< this.columns-1;i++){
+            console.log("entre al for");
+            if(this.lockers[6][i].getFicha()!=null){
+                contador++;
+                if(contador==linea){
+                    alert("4 EN LINEA!!");
+                }
+            }
+        }
         //let combinacion
         //dfs
         //buscar en la matriz si hay alguna combinacion 
-        return;
+        
         
     }
     

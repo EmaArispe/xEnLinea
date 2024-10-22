@@ -106,10 +106,13 @@ canvas.addEventListener('mouseup', (e)=>{
                                 //si hay lugar
                                 if(casilleroEmpty!=null){
                                     trasladarFicha(mousedown,casilleroEmpty);
+                                    console.log("1 linea despues de trasladarFicha");
                                     casilleroEmpty.setIsEmpty(false);
+                                    casilleroEmpty.setFicha(mousedown);
                                     mousedown.setClickable(false);//se inabilita la ficha para que se mueva.
                                     game.changeTurn();//se cambia el turno
                                     drawAll();
+                                    board.winner();
                                 }else{
                                     //volver a posicion inicial
                                     mousedown.setPosX(mousedown.startPosX);

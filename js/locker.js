@@ -3,7 +3,8 @@ class Locker extends Figure {
         super(posX,posY,fill,context);
         this.isEmpty = isEmpty;
         this.width = width;
-        this.height = height;   
+        this.height = height;  
+        this.ficha = null; //ficha que contiene el locker
     }
 
     draw(){
@@ -22,4 +23,6 @@ class Locker extends Figure {
     getWidth(){return this.height;}
 
     setIsEmpty(isEmpty){this.isEmpty = isEmpty;}
+    setFicha(ficha){this.ficha = ficha;}
+    getFicha(){return this.ficha;}
 }
