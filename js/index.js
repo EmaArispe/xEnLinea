@@ -38,7 +38,7 @@ typeGame4.addEventListener('click',()=>{
     board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
-    loadCircle();
+    loadCircle(21);
 });
 
 typeGame5.addEventListener('click',()=>{
@@ -48,7 +48,7 @@ typeGame5.addEventListener('click',()=>{
     board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
-    loadCircle();
+    loadCircle(36);
 });
 
 typeGame6.addEventListener('click',()=>{
@@ -58,7 +58,7 @@ typeGame6.addEventListener('click',()=>{
     board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
-    loadCircle();
+    loadCircle(40);
 });
 
 typeGame7.addEventListener('click',()=>{
@@ -68,7 +68,7 @@ typeGame7.addEventListener('click',()=>{
     board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
-    loadCircle();
+    loadCircle(44);
 });
 
 let board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,widthBoard,heightBoard);
@@ -177,20 +177,20 @@ let imgRobocop = new Image();
     imgIroman.src = '/iroman.jpg';
 
 //carga de circulos en tablero
-function loadCircle(){
+function loadCircle(cantFichas){
 
 let heightPartial = 550;
-for (let i = 0; i < 10; i++){
+for (let i = 0; i < cantFichas; i++){
     let c = new Circle(marginBoard/2, heightPartial,randomRGB(), ctx, 25,imgRobocop);
-    heightPartial = heightPartial - 20;
+    heightPartial = heightPartial - 7;
     figuras.push(c);
     c.draw();
 }
 
 heightPartial = 550;
-for (let i = 0; i < 10; i++){
+for (let i = 0; i < cantFichas; i++){
     let c = new Circle(marginBoard + 820 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgIroman);
-    heightPartial = heightPartial - 20;
+    heightPartial = heightPartial - 7;
     figuras.push(c);
     c.draw();
 }
