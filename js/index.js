@@ -30,6 +30,9 @@ let typeGame5 = document.querySelector('#five');
 let typeGame6 = document.querySelector('#six');
 let typeGame7 = document.querySelector('#seven');
 
+
+//ganador
+let ganador = false;
 //eventos de creacion de juegos segun clickeo
 typeGame4.addEventListener('click',()=>{
     //selectGame.classList.add("hidden");
@@ -106,13 +109,23 @@ canvas.addEventListener('mouseup', (e)=>{
                                 //si hay lugar
                                 if(casilleroEmpty!=null){
                                     trasladarFicha(mousedown,casilleroEmpty);
+                                    //mousedown.setPosX(casilleroEmpty.getPosX()+32.5);
+                                    //mousedown.setPosY(casilleroEmpty.getPosY()+32.5);
                                     console.log("1 linea despues de trasladarFicha");
                                     casilleroEmpty.setIsEmpty(false);
                                     casilleroEmpty.setFicha(mousedown);
                                     mousedown.setClickable(false);//se inabilita la ficha para que se mueva.
                                     game.changeTurn();//se cambia el turno
                                     drawAll();
-                                    board.winner();
+                                    let jugadorA = mousedown.getPlayer();
+                                    setTimeout(()=>{     
+                                        ganador = board.winner(jugadorA);                                   
+                                        console.log(ganador);
+                                        if(ganador){
+                                            console.log("4 en linea");
+                                            //alert("4 en linea");
+                                        }
+                                    },2000);
                                 }else{
                                     //volver a posicion inicial
                                     mousedown.setPosX(mousedown.startPosX);
@@ -183,7 +196,16 @@ function trasladarFicha(ficha,casillero){
     let intervaloY = setInterval(() => {
         
         if (posYficha < posYcasillero) {
-            posYficha+=30; // incrementar la posición de la ficha
+            if(posYficha<120){
+                posYficha+=5;
+            }else if(posYficha<150){
+                posYficha+=15; // incrementar la posición de la ficha
+            }else{
+                posYficha+=40
+            }
+            if(posYficha > posYcasillero){
+                posYficha-=20;
+            }
             ficha.setPosY(posYficha); // actualizar la posición de la ficha
             drawAll(); // redibujar todo
         } else {
@@ -202,13 +224,13 @@ function rebote(ficha,pos,buttom,top){
     let i = 0;
     let intervalorebote= setInterval(()=>{
             if(pos>=top&& sentido){
-                pos-=15;
+                pos-=25;
                 ficha.setPosY(pos);
                 drawAll();
                             
             }else if(pos<buttom){
                 sentido=false;
-                pos+=5;
+                pos+=10;
                 ficha.setPosY(pos);
                 drawAll();
             }
