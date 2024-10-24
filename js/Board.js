@@ -134,6 +134,7 @@ class Board extends Figure{
 
             }
         }
+        
         contador=0;
         //secuencia diagonal derecha
         //buscar cero
@@ -143,7 +144,7 @@ class Board extends Figure{
             posRowTope+=1;
             posColumnTope-=1;            
         }
-
+        
         while (posRowTope>0 && posColumnTope<this.columns){
             if(this.lockers[posRowTope][posColumnTope].getFicha()!=null){
                 if(this.lockers[posRowTope][posColumnTope].getFicha().getPlayer()===player){
@@ -154,19 +155,23 @@ class Board extends Figure{
                 }else{
                     contador=0;
                 }
-                posRowTope-=1;
-                posColumnTope+=1;
             }
+            posRowTope-=1;
+            posColumnTope+=1;
         }
+        
         contador=0;
         posRowTope = positionMatriz.row;
         posColumnTope = positionMatriz.column
-        while(posRowTope<this.rows-1&&posColumnTope<this.columns){
+        console.log(posRowTope +"pos top" + posColumnTope + "pos colum");
+        while(posRowTope<this.rows-1&&posColumnTope<this.columns-1){
             posRowTope+=1;
             posColumnTope+=1;            
         }
+        console.log(posRowTope +"pos top" + posColumnTope + "pos colum   despues del while");
         
-        while(posRowTope<this.rows-1&&posColumnTope>0){
+        while(posRowTope>0&&posColumnTope>=0){
+            console.log("adentro del while:"+ posRowTope +"row " + posColumnTope +" column");
             if(this.lockers[posRowTope][posColumnTope].getFicha()!=null){
                 if(this.lockers[posRowTope][posColumnTope].getFicha().getPlayer()===player){
                     contador++;
@@ -176,9 +181,10 @@ class Board extends Figure{
                 }else{
                     contador=0;
                 }
-                posRowTope-=1;
-                posColumnTope-=1;
+                
             }
+            posRowTope-=1;
+            posColumnTope-=1;
         }
         return false;
     }
