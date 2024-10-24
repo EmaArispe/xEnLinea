@@ -1,8 +1,6 @@
 class Board extends Figure{
     
-
     constructor(posX,posY,fill,context,width,height){
-        console.log(posX,posY);
         super(posX,posY,fill,context);
         this.width = width;
         this.height = height;
@@ -36,18 +34,17 @@ class Board extends Figure{
                 }else{
                     this.lockers[i][j] = new Locker(x+widthLoker, y+heightLocker,"#ff0000",this.context, true, widthLoker, heightLocker);
                     x+=widthLoker+marginX;
+                    this.lockers[i][j].setMatrizPosition(i,j);//le asigno posicion de donde se ubica en matriz para calcular logica
                 }
             }
             x = this.posX-widthLoker+(widthBoard/2)-(widthTablero/2);
             y+=heightLocker+marginY;
           }
-          console.log(this.lockers)
     }
     
     draw(){//va a recibir parametro tamanio de juego
         super.draw();
         this.context.fillRect(this.posX,this.posY,this.width,this.height);
-        console.log(this.posX, this.posY);
         for(let i = 0; i < this.lockers.length;i++){
             for(let j = 0; j<this.lockers[i].length;j++){
                 this.lockers[i][j].draw();
@@ -99,25 +96,93 @@ class Board extends Figure{
 
 
     //metodo que averigue si alguien cumplio la combinacion (recibe parametro del tipo de juego/viene del index.    )
-    winner(player){
-
+    winner(player,casillero){
+        let positionMatriz = casillero.getMatrizPosition();
         let contador = 0;
         let linea = 4;
-        for(let i =0; i< this.columns-1;i++){
-            console.log("entre al for");
-            let playerLoker = this.lockers[this.rows-1][i].getFicha();
-            if(playerLoker!=null){
-                console.log("ficha colocada de :"+playerLoker.getPlayer());
-                if(playerLoker.getPlayer()===player){
-                    
+        let ganador = false;
+        
+        //secuencia horizontal
+        for(let i =0; i<this.columns;i++){
+            //que el casillero no este vacio
+            if(this.lockers[positionMatriz.row][i].getFicha()!=null){
+                //verificar que sea el player
+                if(this.lockers[positionMatriz.row][i].getFicha().getPlayer()===player){
                     contador++;
+                    if(contador==linea){
+                        return true;
+                    }
+                }else{//si no es se corta la secuencia
+                    contador=0;
                 }
-                if(contador==linea){
-                    return true;
+
+            }
+        }
+        contador = 0;
+        //secuencia vertical
+        for(let i =1; i<this.rows;i++){
+            //que el casillero no este vacio
+            if(this.lockers[i][positionMatriz.column].getFicha()!=null){
+                if(this.lockers[i][positionMatriz.column].getFicha().getPlayer()===player){
+                    contador++;
+                    if(contador==linea){
+                        return true;
+                    }
+                }else{
+                    contador=0;
                 }
+
+            }
+        }
+        contador=0;
+        //secuencia diagonal derecha
+        //buscar cero
+        let posRowTope = positionMatriz.row;
+        let posColumnTope = positionMatriz.column;
+        while(posRowTope<this.rows-1&&posColumnTope>0){
+            posRowTope+=1;
+            posColumnTope-=1;            
+        }
+
+        while (posRowTope>0 && posColumnTope<this.columns){
+            if(this.lockers[posRowTope][posColumnTope].getFicha()!=null){
+                if(this.lockers[posRowTope][posColumnTope].getFicha().getPlayer()===player){
+                    contador++;
+                    if(contador==linea){
+                        return true;
+                    }
+                }else{
+                    contador=0;
+                }
+                posRowTope-=1;
+                posColumnTope+=1;
+            }
+        }
+        contador=0;
+        posRowTope = positionMatriz.row;
+        posColumnTope = positionMatriz.column
+        while(posRowTope<this.rows-1&&posColumnTope<this.columns){
+            posRowTope+=1;
+            posColumnTope+=1;            
+        }
+        
+        while(posRowTope<this.rows-1&&posColumnTope>0){
+            if(this.lockers[posRowTope][posColumnTope].getFicha()!=null){
+                if(this.lockers[posRowTope][posColumnTope].getFicha().getPlayer()===player){
+                    contador++;
+                    if(contador==linea){
+                        return true;
+                    }
+                }else{
+                    contador=0;
+                }
+                posRowTope-=1;
+                posColumnTope-=1;
             }
         }
         return false;
     }
+
+    
     
 }

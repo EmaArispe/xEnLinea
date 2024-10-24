@@ -109,8 +109,6 @@ canvas.addEventListener('mouseup', (e)=>{
                                 //si hay lugar
                                 if(casilleroEmpty!=null){
                                     trasladarFicha(mousedown,casilleroEmpty);
-                                    //mousedown.setPosX(casilleroEmpty.getPosX()+32.5);
-                                    //mousedown.setPosY(casilleroEmpty.getPosY()+32.5);
                                     console.log("1 linea despues de trasladarFicha");
                                     casilleroEmpty.setIsEmpty(false);
                                     casilleroEmpty.setFicha(mousedown);
@@ -119,7 +117,7 @@ canvas.addEventListener('mouseup', (e)=>{
                                     drawAll();
                                     let jugadorA = mousedown.getPlayer();
                                     setTimeout(()=>{     
-                                        ganador = board.winner(jugadorA);                                   
+                                        ganador = board.winner(jugadorA,casilleroEmpty);                                   
                                         console.log(ganador);
                                         if(ganador){
                                             console.log("4 en linea");

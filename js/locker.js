@@ -5,6 +5,8 @@ class Locker extends Figure {
         this.width = width;
         this.height = height;  
         this.ficha = null; //ficha que contiene el locker
+        this.matrizPositionRow=null;
+        this.matrizPositionColumn=null;
     }
 
     draw(){
@@ -25,4 +27,12 @@ class Locker extends Figure {
     setIsEmpty(isEmpty){this.isEmpty = isEmpty;}
     setFicha(ficha){this.ficha = ficha;}
     getFicha(){return this.ficha;}
+
+    setMatrizPosition(row,column){this.matrizPositionRow=row;this.matrizPositionColumn=column;}
+    getMatrizPosition(){
+        return {
+            row:this.matrizPositionRow,
+            column:this.matrizPositionColumn
+                };
+    }
 }
