@@ -29,7 +29,8 @@ let typeGame4 = document.querySelector('#four');//toma la seleccion del tamanio 
 let typeGame5 = document.querySelector('#five');
 let typeGame6 = document.querySelector('#six');
 let typeGame7 = document.querySelector('#seven');
-
+//LOG
+let log = document.querySelector('.log');
 
 //ganador
 let ganador = false;
@@ -41,40 +42,41 @@ typeGame4.addEventListener('click',()=>{
     board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
-    loadCircle(24);
+    loadCircle(21);
+    stateLog("4 en linea!!!!",log);
     //let game = new Game("robocop","ironman",4);
 });
 
 typeGame5.addEventListener('click',()=>{
+    //selectGame.classList.add("hidden");
+    let columns = 9;
+    let rows = 7;
+    board.createLokers(columns,rows,widthBoard,heightBoard);
+    clearCanvas();
+    board.draw();
+    loadCircle(24);
+    //let game = new Game("robocop","ironman",5);
+});
+
+typeGame6.addEventListener('click',()=>{
+    //selectGame.classList.add("hidden");
+    let columns = 9;
+    let rows = 8;
+    board.createLokers(columns,rows,widthBoard,heightBoard);
+    clearCanvas();
+    board.draw();
+    loadCircle(32);
+    //let game = new Game("robocop","ironman",6);
+});
+
+typeGame7.addEventListener('click',()=>{
     //selectGame.classList.add("hidden");
     let columns = 10;
     let rows = 8;
     board.createLokers(columns,rows,widthBoard,heightBoard);
     clearCanvas();
     board.draw();
-    loadCircle(35);
-    //let game = new Game("robocop","ironman",5);
-});
-
-typeGame6.addEventListener('click',()=>{
-    //selectGame.classList.add("hidden");
-    let columns = 11;
-    let rows = 8;
-    board.createLokers(columns,rows,widthBoard,heightBoard);
-    clearCanvas();
-    board.draw();
-    loadCircle(38);
-    //let game = new Game("robocop","ironman",6);
-});
-
-typeGame7.addEventListener('click',()=>{
-    //selectGame.classList.add("hidden");
-    let columns = 12;
-    let rows = 8;
-    board.createLokers(columns,rows,widthBoard,heightBoard);
-    clearCanvas();
-    board.draw();
-    loadCircle(42);
+    loadCircle(32);
     //let game = new Game("robocop","ironman",7);
 });
 
@@ -99,8 +101,6 @@ canvas.addEventListener('mousedown', (e)=>{
 canvas.addEventListener('mouseup', (e)=>{
 
                         if(mousedown != null){
-                            console.log("figura soltada en x:"+ mousedown.getPosX());
-                            console.log("figura soltada en y:"+ mousedown.getPosY());
                             //buscar el casillero receptor
                             let casilleroReceptor = board.isAnyLockerPointInsided(getX(e),getY(e));
                             //si encontro casillero receptor busca la columna
@@ -121,7 +121,6 @@ canvas.addEventListener('mouseup', (e)=>{
                                         console.log(ganador);
                                         if(ganador){
                                             console.log("4 en linea");
-                                            //alert("4 en linea");
                                         }
                                     },2000);
                                 }else{
@@ -301,7 +300,13 @@ function loadCircle(cantFichas){
 let heightPartial = 550;
 for (let i = 0; i < cantFichas; i++){
     let c = new Circle(marginBoard/2, heightPartial,randomRGB(), ctx, 25,imgRobocop,"robocop");
-    heightPartial = heightPartial - 7;
+    
+    if(i==(cantFichas-2)){
+        heightPartial -= 55;    
+    }else{
+
+        heightPartial = heightPartial -2;
+    }
     figuras.push(c);
     c.draw();
 }
@@ -309,7 +314,13 @@ for (let i = 0; i < cantFichas; i++){
 heightPartial = 550;
 for (let i = 0; i < cantFichas; i++){
     let c = new Circle(marginBoard + 820 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgIroman,"ironman");
-    heightPartial = heightPartial - 7;
+    
+    if(i==(cantFichas-2)){
+        heightPartial -= 55;    
+    }else{
+
+        heightPartial = heightPartial -2;
+    }
     figuras.push(c);
     c.draw();
 }
@@ -325,4 +336,20 @@ function isCircle(e){
     }
 }
 
+//imprime en el juego
+function stateLog(message,log){
+    let parrafo = document.createElement("p");
+    parrafo.textContent=message;
+    
+    if (log.lastElementChild) {
+        log.lastElementChild.classList.remove('logStyle');
+    }
+    
+    parrafo.classList.add('logStyle');
+
+    //log.removeChild(log.firstChild);
+    log.appendChild(parrafo);   
+    parrafo.scrollIntoView();
+}
+    
 }
