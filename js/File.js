@@ -1,4 +1,4 @@
-class Circle extends Figure{
+class File extends Figure{
 
     #radius
     #img

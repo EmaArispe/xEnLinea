@@ -12,8 +12,8 @@ class LokerReceptor extends Locker{
 
     //
     isPointInsided(x, y) {
-        return (x >= this.posX  && x <= this.posX  + this.width) &&
-               (y >= this.posY  && y <= this.posY  + this.height);
+        return (x >= this.posX +10 && x <= this.posX -10  + this.width) &&
+               (y >= this.posY +10 && y <= this.posY -10  + this.height);
     }
 
     getColumn(){

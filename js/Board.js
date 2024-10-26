@@ -1,34 +1,32 @@
 class Board extends Figure{
     
-    constructor(posX,posY,fill,context,width,height){
+    constructor(posX,posY,fill,context,width,height,columns,rows,combinations){
         super(posX,posY,fill,context);
         this.width = width;
         this.height = height;
         this.lockers = [];
-        this.columns = null;
-        this.rows = null;
+        this.columns = columns;
+        this.rows = rows;
+        this.combinations=combinations;
     }
     
     //creacion dinamica de lokers segun tamanioo juego
-    createLokers(columns,rows,widthBoard,heightBoard){
-        this.columns=columns;
-        this.rows=rows;
-        let marginX = 3;
-        let marginY =3;
+    createLokers(){
         this.lockers=[];
+        let marginX = 3;//margenes de separacion
+        let marginY =3;
         let widthLoker = 65;//tamaño lokers segun cantidad fichas
         let heightLocker = 65;
-        let widthTablero= ((columns*(marginX+widthLoker)));
-        let heightTablero=((rows*(marginY+heightLocker)));
-        let x = this.posX-widthLoker+(widthBoard/2)-(widthTablero/2);//pos coordenadas segun tamanio fichas
-        let y = this.posY-heightLocker+(heightBoard/2)-(heightTablero/2);
-        
-
-        for (let i = 0; i < rows; i++) {
+        let widthTablero= ((this.columns*(marginX+widthLoker)));
+        let heightTablero=((this.rows*(marginY+heightLocker)));
+        let x = this.posX-widthLoker+(this.width/2)-(widthTablero/2);//pos coordenadas segun tamanio fichas
+        let y = this.posY-heightLocker+(this.height/2)-(heightTablero/2);
+        //llenado de matriz con los casilleros
+        for (let i = 0; i < this.rows; i++) {
             this.lockers[i] = []; // Inicializamos cada fila como un arreglo
-            for (let j = 0; j < columns; j++) {
+            for (let j = 0; j < this.columns; j++) {
               // Instanciamos un nuevo objeto para cada posición
-                if(i===0){
+                if(i===0){//linea de lockers receptores, solo la primera
                     this.lockers[i][j] = new LokerReceptor(x+widthLoker, y+heightLocker,"#FFFF00",this.context, false, widthLoker, heightLocker,j);  
                     x+=widthLoker+marginX;
                 }else{
@@ -37,12 +35,13 @@ class Board extends Figure{
                     this.lockers[i][j].setMatrizPosition(i,j);//le asigno posicion de donde se ubica en matriz para calcular logica
                 }
             }
-            x = this.posX-widthLoker+(widthBoard/2)-(widthTablero/2);
+            x = this.posX-widthLoker+(this.width/2)-(widthTablero/2);
             y+=heightLocker+marginY;
           }
     }
     
-    draw(){//va a recibir parametro tamanio de juego
+    //dibuja la matriz de lockers
+    draw(){
         super.draw();
         this.context.fillRect(this.posX,this.posY,this.width,this.height);
         for(let i = 0; i < this.lockers.length;i++){
@@ -59,7 +58,6 @@ class Board extends Figure{
         this.heigth=height;
     }
 
-
     //devuelve un casillero si una ficha se para sobre alguno de los receptores, sino null.
     isAnyLockerPointInsided(x,y){
         for(let i=0; i<this.lockers[0].length;i++){
@@ -70,23 +68,18 @@ class Board extends Figure{
         return null;
     }
 
-    
-
-
-    //metodo que devuelva casillero segun columna a la que se quiere ubicar una ficha.
+    //devuelve casillero vacio segun columna a la que se quiere ubicar una ficha.
     getLokerEmptyInColumn(column,rows){
 
         for(let i = rows-1 ; i > 0; i--){
-
             if(this.lockers[i][column].getIsEmpty()){
                 return this.lockers[i][column];
             }
-        
         }
         return null;
     }
 
-    getRows(){//harcodeado OJOTA
+    getRows(){
         return this.rows;
     }
 
@@ -94,12 +87,10 @@ class Board extends Figure{
         return this.columns;
     }
 
-
     //metodo que averigue si alguien cumplio la combinacion (recibe parametro del tipo de juego/viene del index.    )
     winner(player,casillero){
         let positionMatriz = casillero.getMatrizPosition();
         let contador = 0;
-        let linea = 4;
         let ganador = false;
         
         //secuencia horizontal
@@ -109,7 +100,7 @@ class Board extends Figure{
                 //verificar que sea el player
                 if(this.lockers[positionMatriz.row][i].getFicha().getPlayer()===player){
                     contador++;
-                    if(contador==linea){
+                    if(contador==this.combinations){
                         return true;
                     }
                 }else{//si no es se corta la secuencia
@@ -125,7 +116,7 @@ class Board extends Figure{
             if(this.lockers[i][positionMatriz.column].getFicha()!=null){
                 if(this.lockers[i][positionMatriz.column].getFicha().getPlayer()===player){
                     contador++;
-                    if(contador==linea){
+                    if(contador==this.combinations){
                         return true;
                     }
                 }else{
@@ -149,7 +140,7 @@ class Board extends Figure{
             if(this.lockers[posRowTope][posColumnTope].getFicha()!=null){
                 if(this.lockers[posRowTope][posColumnTope].getFicha().getPlayer()===player){
                     contador++;
-                    if(contador==linea){
+                    if(contador==this.combinations){
                         return true;
                     }
                 }else{
@@ -175,7 +166,7 @@ class Board extends Figure{
             if(this.lockers[posRowTope][posColumnTope].getFicha()!=null){
                 if(this.lockers[posRowTope][posColumnTope].getFicha().getPlayer()===player){
                     contador++;
-                    if(contador==linea){
+                    if(contador==this.combinations){
                         return true;
                     }
                 }else{

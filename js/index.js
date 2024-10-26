@@ -8,7 +8,6 @@ let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext("2d");
 const width = canvas.width;
 const height = canvas.height;
-
 let figuras = [];
 
 const rect = canvas.getBoundingClientRect()//constante para tomar distancia y calcular x/y
@@ -20,7 +19,15 @@ const heightBoard=600;
 const marginBoard = (width-widthBoard)/2;
 const marginSupBoard = height-heightBoard;
 
-let mousedown = null;
+let file = null;//ficha
+let board = null;//tablero
+let game = null;//juego
+let firstTurn = null;//primer turno
+//lectura de pantalla informativa del transcurso del juego
+let log = document.querySelector('.log');
+//ganador
+let ganador = false;
+
 
 //INICIALIZACION DE TABLERO (setea dimensiones y combinaciones segun parametro 4,5,6,7 en linea)
 
@@ -28,121 +35,119 @@ let selectGame = document.querySelector('.select-game');
 selectGame.querySelectorAll('button').forEach(button=>{
     button.addEventListener('click',()=>{
         setupGame(parseInt(button.id));
+        selectGame.classList.add('hidden');
     });
 });
 
 //setea parametros juego segun eleccion
 function setupGame(gameSize){
-    let columns, rows , files;
+    let columns, rows , files, combinations;
     switch(gameSize){
         case 4:
             columns=8;
             rows = 7; 
             files = 21;
+            combinations=4;
             break;
         case 5:
             columns=9;
             rows = 7; 
             files = 24;
+            combinations=5
             break;
         case 6:
             columns=9;
             rows = 8; 
             files = 32;
+            combinations=6;
             break;
         case 7:
             columns=10;
             rows = 8; 
             files = 32;
+            combinations=7;
             break;
         default:
             console.log("error, seleccion invalida");
             return;
     }
-    board.createLokers(columns, rows, widthBoard,heightBoard);
-    clearCanvas();
+    //creacion de tablero, juego y eleccion aleatoria del primer turno
+    board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,widthBoard,heightBoard,columns,rows,combinations);
+    game = new Game("robocop","ironman");
+    firstTurn=game.setFirstTurn()
+    stateLog("Comienza jugando: "+firstTurn,log);
+    board.createLokers();
+    //clearCanvas();
     board.draw();
     loadFiles(files);//carga de fichas
-
-
 };
 
-//lectura de pantalla informativa del transcurso del juego
-let log = document.querySelector('.log');
-//ganador
-let ganador = false;
-
-
-
-let board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,widthBoard,heightBoard);
-let game = new Game("robocop","ironman",7);
-let firstTurn=game.setFirstTurn()
-alert("el primero en jugar es :"+firstTurn);
-
-
-
+//EVENTOS DE MOUSE   
+//controla que se seleccione una ficha al turno correspondiente
 canvas.addEventListener('mousedown', (e)=>{
-                        let figura = isCircle(e);
-                        if(figura != null&&figura.isClickable()&&game.isTurn(figura.getPlayer())){
-                            console.log("clickeada")
-                            mousedown = figura;  
+                        let figura = isFile(e);
+                        if(figura != null && figura.isClickable()){
+                            //verifica si clickea ficha al turno correspondiente
+                            if(game.isTurn(figura.getPlayer())){
+                            file = figura;  
+                            }else{
+                                stateLog(figura.getPlayer()+" no es tu turno",log);
+                            }
                         }
                         drawAll();
                     });
-
-
-
+//soltar seleccion de ficha
 canvas.addEventListener('mouseup', (e)=>{
-
-                        if(mousedown != null){
-                            //buscar el casillero receptor
-                            let casilleroReceptor = board.isAnyLockerPointInsided(getX(e),getY(e));
+                        if(file != null){
+                            //buscar casillero receptor
+                            let lockerReceptor = board.isAnyLockerPointInsided(getX(e),getY(e));
                             //si encontro casillero receptor busca la columna
-                            if(casilleroReceptor!=null){                    
-                                let casilleroEmpty = board.getLokerEmptyInColumn(casilleroReceptor.getColumn(),board.getRows());
+                            if(lockerReceptor!=null){                    
+                                let emptyLocker = board.getLokerEmptyInColumn(lockerReceptor.getColumn(),board.getRows());
                                 //si hay lugar
-                                if(casilleroEmpty!=null){
-                                    trasladarFicha(mousedown,casilleroEmpty);
-                                    console.log("1 linea despues de trasladarFicha");
-                                    casilleroEmpty.setIsEmpty(false);
-                                    casilleroEmpty.setFicha(mousedown);
-                                    mousedown.setClickable(false);//se inabilita la ficha para que se mueva.
-                                    game.changeTurn();//se cambia el turno
+                                if(emptyLocker!=null){
+                                    traslateFile(file,emptyLocker);
+                                    emptyLocker.setIsEmpty(false);
+                                    emptyLocker.setFicha(file);
+                                    file.setClickable(false);//se inabilita la ficha para que se mueva.
                                     drawAll();
-                                    let jugadorA = mousedown.getPlayer();
+                                    let player = file.getPlayer();
                                     setTimeout(()=>{     
-                                        ganador = board.winner(jugadorA,casilleroEmpty);                                   
-                                        console.log(ganador);
+                                        ganador = board.winner(player,emptyLocker);                                   
                                         if(ganador){
-                                            console.log("4 en linea");
+                                            stateLog("GANADOR!!: "+player,log);
+                                        }else{
+                                            stateLog("es el turno de : "+ game.changeTurn(),log);//se cambia el turno y se informa
                                         }
-                                    },2000);
+                                    },1000);
+                                    
                                 }else{
                                     //volver a posicion inicial
-                                    mousedown.setPosX(mousedown.startPosX);
-                                    mousedown.setPosY(mousedown.startPosY);
+                                    stateLog("Columna llena, intenta nuevamente",log);
+                                    file.setPosX(file.startPosX);
+                                    file.setPosY(file.startPosY);
                                     drawAll();
                                 }
 
                             }else{
                                 //volver a posicion inicial
-                                mousedown.setPosX(mousedown.startPosX);
-                                mousedown.setPosY(mousedown.startPosY);
-                                console.log(mousedown.startPosX + "  " + mousedown.startPosY);
+                                stateLog("Posicion incorrecta, intenta nuevamente",log);
+                                file.setPosX(file.startPosX);
+                                file.setPosY(file.startPosY);
                                 drawAll();
                             }
-                            mousedown = null;
+                            file = null;
                         }
                     });
 
+//drop de la ficha
 canvas.addEventListener('mousemove', (e)=>{
-                        if(mousedown != null){
-                            mousedown.setPosX(getX(e));
-                            mousedown.setPosY(getY(e));
+                        if(file != null){
+                            file.setPosX(getX(e));
+                            file.setPosY(getY(e));
                             //pintar o despintar si se pasa por los casilleros receptores
                             for(let i=0; i<board.lockers[0].length;i++){
                                 if(board.lockers[0][i].isPointInsided(getX(e),getY(e))){
-                                    //console.log("estoy adentro del casillero ");
                                     board.lockers[0][i].setFill("#000000");
                                 }else{
                                     board.lockers[0][i].setFill("#FFFF00");
@@ -152,16 +157,16 @@ canvas.addEventListener('mousemove', (e)=>{
                         }
                     });
 
-function trasladarFicha(ficha,casillero){
+//efecto gravedad (movimiento de la ficha)
+function traslateFile(ficha,casillero){
     let posXficha=ficha.getPosX();
     let posYficha=ficha.getPosY();
     let posXcasillero=casillero.getPosX()+32.5;
-    let posYcasillero=casillero.getPosY()+32.5;
+    let posYcasillero=casillero.getPosY()+29;
     let velocidad = 1; // velocidad de movimiento (en milisegundos)
-    
 
     if(posXficha<posXcasillero){
-
+        //desciende mientras no llegue al casillero destino en intervalos
         let intervaloX = setInterval(() => {
             if (posXficha < posXcasillero) {
                 posXficha++; // incrementar la posición de la ficha
@@ -207,12 +212,11 @@ function trasladarFicha(ficha,casillero){
                   
 }
 
-
+//crea efecto rebote
 function rebote(ficha,pos,buttom,top){
     let sentido = true;
     let position = buttom ;
     let contador = 0;
-    let i = 0;
     let intervalorebote= setInterval(()=>{
             if(pos>=top&& sentido){
                 pos-=25;
@@ -233,7 +237,6 @@ function rebote(ficha,pos,buttom,top){
                 console.log(contador);
             }
             
-
             if(contador >= 2){
                 clearInterval(intervalorebote);
             }
@@ -245,7 +248,7 @@ function rebote(ficha,pos,buttom,top){
 }
 
 
-
+//dibujar todo
 function drawAll(){
     clearCanvas();
     board.draw();
@@ -254,16 +257,13 @@ function drawAll(){
     });
 }
 
-
-
-//pos x - y
+//obtener pos x e y 
 function getX(event){
     return event.clientX - rect.left;
 }
 function getY(event){
     return event.clientY - rect.top;
 }
-
 
 //borrar canvas
 function clearCanvas(){
@@ -279,21 +279,19 @@ function randomRGB() {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-
 //carga de imagenes
 let imgRobocop = new Image();
     imgRobocop.src = '/robocop.jpg';
 
+let imgIroman = new Image();
+imgIroman.src = '/iroman.jpg';
 
-    let imgIroman = new Image();
-    imgIroman.src = '/iroman.jpg';
-
-//carga de circulos en tablero
+//carga de fichas en tablero
 function loadFiles(cantFichas){
 
 let heightPartial = 550;
 for (let i = 0; i < cantFichas; i++){
-    let c = new Circle(marginBoard/2, heightPartial,randomRGB(), ctx, 25,imgRobocop,"robocop");
+    let c = new File(marginBoard/2, heightPartial,randomRGB(), ctx, 25,imgRobocop,"robocop");
     
     if(i==(cantFichas-2)){
         heightPartial -= 55;    
@@ -307,7 +305,7 @@ for (let i = 0; i < cantFichas; i++){
 
 heightPartial = 550;
 for (let i = 0; i < cantFichas; i++){
-    let c = new Circle(marginBoard + 820 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgIroman,"ironman");
+    let c = new File(marginBoard + 820 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgIroman,"ironman");
     
     if(i==(cantFichas-2)){
         heightPartial -= 55;    
@@ -322,7 +320,7 @@ for (let i = 0; i < cantFichas; i++){
 }
 
 
-function isCircle(e){
+function isFile(e){
     for(let i = 0; i < figuras.length; i++){
         if(figuras[i].isPointInsided(getX(e),getY(e))){
             return figuras[i];

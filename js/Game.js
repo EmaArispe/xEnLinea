@@ -28,8 +28,10 @@ class Game {
     changeTurn(){
         if(this.turn===this.playerA){
             this.turn=this.playerB;
+            return this.turn;
         }else{
             this.turn =this.playerA;
+            return this.turn;
         }
     }
 
