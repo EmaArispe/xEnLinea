@@ -27,11 +27,39 @@ let firstTurn = null;//primer turno
 let log = document.querySelector('.log');
 //ganador
 let ganador = false;
-
+let filePlayerA = "/robocop.jpg";//imagenes por default
+let filePlayerB="/iroman.jpg";//imagenes por default
 
 //INICIALIZACION DE TABLERO (setea dimensiones y combinaciones segun parametro 4,5,6,7 en linea)
-
+let startGame = document.querySelector('.start-game');
+let startGameButton = document.querySelector('#play');
 let selectGame = document.querySelector('.configuration-game');
+let selectFile = document.querySelectorAll('.select-file .player img');
+
+
+//seleccion de ficha personalizada por jugador
+selectFile.forEach(element => {
+    element.addEventListener('click',()=>{
+        
+        if(parseInt(element.id)>0 && parseInt(element.id)<=3 ){
+            filePlayerA="/"+element.src.split('/').pop();
+            console.log(filePlayerA);
+            cargar();
+        }
+        if(parseInt(element.id )>3&&parseInt(element.id )<=6){
+            filePlayerB="/"+element.src.split('/').pop();
+            console.log(filePlayerB);
+            cargar();
+        }
+    })
+});
+
+
+//esconder pantalla telon al apretar play
+startGameButton.addEventListener('click',()=>{
+    startGame.classList.add('hidden');
+})
+
 selectGame.querySelectorAll('button').forEach(button=>{
     button.addEventListener('click',()=>{
         setupGame(parseInt(button.id));
@@ -159,7 +187,6 @@ canvas.addEventListener('mousemove', (e)=>{
                                 }
                             }
                             drawAll();                           
-                            
                         }
                     });
 
@@ -285,12 +312,15 @@ function randomRGB() {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-//carga de imagenes
-let imgRobocop = new Image();
-    imgRobocop.src = '/robocop.jpg';
 
-let imgIroman = new Image();
-imgIroman.src = '/iroman.jpg';
+let imgRobocop = new Image();
+let imgIroman=new Image();
+
+
+function cargar(){
+    imgRobocop.src = filePlayerA;
+    imgIroman.src = filePlayerB;
+}
 
 //carga de fichas en tablero
 function loadFiles(cantFichas){
