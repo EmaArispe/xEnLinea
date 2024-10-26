@@ -121,14 +121,18 @@ function setupGame(gameSize){
     board.createLokers();
     //clearCanvas();
     board.draw();
-    loadFiles(files);//carga de fichas
+    //cargar las fichas despues de un tiempo, para que se creen encima del board (tarda en cargar la imagen)
+    console.log("antes de cargar fichas");
+    setTimeout(loadFiles(files), 1000); //no esta dando bola al tiempo
+    console.log("despues de cargar fichas");
+    //loadFiles(files);//carga de fichas
 };
 
 //EVENTOS DE MOUSE   
 //controla que se seleccione una ficha al turno correspondiente
 canvas.addEventListener('mousedown', (e)=>{
                         let figura = isFile(e);
-                        if(figura != null && figura.isClickable()){
+                        if(figura != null && figura.isClickable() && !ganador){
                             //verifica si clickea ficha al turno correspondiente
                             if(game.isTurn(figura.getPlayer())){
                             file = figura;
@@ -161,7 +165,7 @@ canvas.addEventListener('mouseup', (e)=>{
                                         }else{
                                             stateLog("es el turno de : "+ game.changeTurn(),log);//se cambia el turno y se informa
                                         }
-                                    },1000);
+                                    },700);
                                     lockerReceptor.setFill("rgba(0,0,0,0)");
                                 }else{
                                     //volver a posicion inicial
@@ -334,10 +338,11 @@ function loadImg(){
 
 //carga de fichas en tablero
 function loadFiles(cantFichas){
-
+    console.log("cargando fichas");
+//las posiciones 95 y 1105 estan "harcodeadas" para que la imagen de fondo sea entera, dejaria de existir marginBoard
 let heightPartial = 550;
 for (let i = 0; i < cantFichas; i++){
-    let c = new File(marginBoard/2, heightPartial,randomRGB(), ctx, 25,imgPlayerB,"robocop");
+   let c = new File(95, heightPartial,randomRGB(), ctx, 25,imgPlayerB,"robocop");
     
     if(i==(cantFichas-2)){
         heightPartial -= 55;    
@@ -351,7 +356,7 @@ for (let i = 0; i < cantFichas; i++){
 
 heightPartial = 550;
 for (let i = 0; i < cantFichas; i++){
-    let c = new File(marginBoard + 820 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgPlayerA,"ironman");
+    let c = new File(1105, heightPartial,randomRGB(), ctx, 25, imgPlayerA,"ironman");
     
     if(i==(cantFichas-2)){
         heightPartial -= 55;    

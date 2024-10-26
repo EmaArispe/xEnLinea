@@ -8,8 +8,12 @@ class Board extends Figure{
         this.columns = columns;
         this.rows = rows;
         this.combinations=combinations;
+        
+        // Crear y cargar la imagen
+        this.backgroundImage = new Image();
+        this.backgroundImage.src = '/fondo-ironman-robocop-2.jpg';
     }
-    
+
     //creacion dinamica de lokers segun tamanioo juego
     createLokers(){
         this.lockers=[];
@@ -42,8 +46,42 @@ class Board extends Figure{
     
     //dibuja la matriz de lockers
     draw(){
-        super.draw();
-        this.context.fillRect(this.posX,this.posY,this.width,this.height);
+// Comprobar si la imagen está cargada
+    if (this.backgroundImage.complete) {
+        const imageAspectRatio = this.backgroundImage.width / this.backgroundImage.height;
+        const boardAspectRatio = this.width / this.height;
+        
+        let sx, sy, sWidth, sHeight;
+        
+        // Comparar proporciones para definir recorte
+        if (imageAspectRatio > boardAspectRatio) {
+            // La imagen es más ancha que el área, recortar horizontalmente
+            sHeight = this.backgroundImage.height;
+            sWidth = sHeight * boardAspectRatio;
+            sx = (this.backgroundImage.width - sWidth) / 2;
+            sy = 0;
+        } else {
+            // La imagen es más alta que el área, recortar verticalmente
+            sWidth = this.backgroundImage.width;
+            sHeight = sWidth / boardAspectRatio;
+            sx = 0;
+            sy = (this.backgroundImage.height - sHeight) / 2;
+        }
+
+        // Dibujar la imagen recortada en el canvas
+        this.context.drawImage(
+            this.backgroundImage,
+            sx, sy, sWidth, sHeight,      // Recorte de la imagen
+            this.posX, this.posY, this.width, this.height // Tamaño y posición en el canvas
+        );
+    } else {
+        // Dibujar cuando la imagen esté lista
+        this.backgroundImage.onload = () => {
+            this.draw();
+        };
+    }
+        //super.draw();
+        //this.context.fillRect(this.posX,this.posY,this.width,this.height);
         for(let i = 0; i < this.lockers.length;i++){
             for(let j = 0; j<this.lockers[i].length;j++){
                 this.lockers[i][j].draw();
