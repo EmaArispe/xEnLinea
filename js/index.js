@@ -11,7 +11,6 @@ const height = canvas.height;
 
 let figuras = [];
 
-const marginx = 50;
 const rect = canvas.getBoundingClientRect()//constante para tomar distancia y calcular x/y
 const backgroudCanvas = '#9B9B9B'
 
@@ -23,62 +22,57 @@ const marginSupBoard = height-heightBoard;
 
 let mousedown = null;
 
-//INICIALIZACION DE JUEGO //recibe que tipo de juego (y setea tamanios)
-let selectGame = document.querySelector('.select-game');
-let typeGame4 = document.querySelector('#four');//toma la seleccion del tamanio de juego
-let typeGame5 = document.querySelector('#five');
-let typeGame6 = document.querySelector('#six');
-let typeGame7 = document.querySelector('#seven');
-//LOG
-let log = document.querySelector('.log');
+//INICIALIZACION DE TABLERO (setea dimensiones y combinaciones segun parametro 4,5,6,7 en linea)
 
+let selectGame = document.querySelector('.select-game');
+selectGame.querySelectorAll('button').forEach(button=>{
+    button.addEventListener('click',()=>{
+        setupGame(parseInt(button.id));
+    });
+});
+
+//setea parametros juego segun eleccion
+function setupGame(gameSize){
+    let columns, rows , files;
+    switch(gameSize){
+        case 4:
+            columns=8;
+            rows = 7; 
+            files = 21;
+            break;
+        case 5:
+            columns=9;
+            rows = 7; 
+            files = 24;
+            break;
+        case 6:
+            columns=9;
+            rows = 8; 
+            files = 32;
+            break;
+        case 7:
+            columns=10;
+            rows = 8; 
+            files = 32;
+            break;
+        default:
+            console.log("error, seleccion invalida");
+            return;
+    }
+    board.createLokers(columns, rows, widthBoard,heightBoard);
+    clearCanvas();
+    board.draw();
+    loadFiles(files);//carga de fichas
+
+
+};
+
+//lectura de pantalla informativa del transcurso del juego
+let log = document.querySelector('.log');
 //ganador
 let ganador = false;
-//eventos de creacion de juegos segun clickeo
-typeGame4.addEventListener('click',()=>{
-    //selectGame.classList.add("hidden");
-    let columns = 8;
-    let rows = 7;
-    board.createLokers(columns,rows,widthBoard,heightBoard);
-    clearCanvas();
-    board.draw();
-    loadCircle(21);
-    stateLog("4 en linea!!!!",log);
-    //let game = new Game("robocop","ironman",4);
-});
 
-typeGame5.addEventListener('click',()=>{
-    //selectGame.classList.add("hidden");
-    let columns = 9;
-    let rows = 7;
-    board.createLokers(columns,rows,widthBoard,heightBoard);
-    clearCanvas();
-    board.draw();
-    loadCircle(24);
-    //let game = new Game("robocop","ironman",5);
-});
 
-typeGame6.addEventListener('click',()=>{
-    //selectGame.classList.add("hidden");
-    let columns = 9;
-    let rows = 8;
-    board.createLokers(columns,rows,widthBoard,heightBoard);
-    clearCanvas();
-    board.draw();
-    loadCircle(32);
-    //let game = new Game("robocop","ironman",6);
-});
-
-typeGame7.addEventListener('click',()=>{
-    //selectGame.classList.add("hidden");
-    let columns = 10;
-    let rows = 8;
-    board.createLokers(columns,rows,widthBoard,heightBoard);
-    clearCanvas();
-    board.draw();
-    loadCircle(32);
-    //let game = new Game("robocop","ironman",7);
-});
 
 let board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,widthBoard,heightBoard);
 let game = new Game("robocop","ironman",7);
@@ -295,7 +289,7 @@ let imgRobocop = new Image();
     imgIroman.src = '/iroman.jpg';
 
 //carga de circulos en tablero
-function loadCircle(cantFichas){
+function loadFiles(cantFichas){
 
 let heightPartial = 550;
 for (let i = 0; i < cantFichas; i++){
