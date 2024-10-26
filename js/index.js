@@ -74,7 +74,7 @@ function setupGame(gameSize){
     //creacion de tablero, juego y eleccion aleatoria del primer turno
     board = new Board(marginBoard,marginSupBoard,randomRGB(),ctx,widthBoard,heightBoard,columns,rows,combinations);
     game = new Game("robocop","ironman");
-    firstTurn=game.setFirstTurn()
+    firstTurn=game.setFirstTurn();
     stateLog("Comienza jugando: "+firstTurn,log);
     board.createLokers();
     //clearCanvas();
@@ -120,7 +120,7 @@ canvas.addEventListener('mouseup', (e)=>{
                                             stateLog("es el turno de : "+ game.changeTurn(),log);//se cambia el turno y se informa
                                         }
                                     },1000);
-                                    
+                                    lockerReceptor.setFill("rgba(0,0,0,0)");
                                 }else{
                                     //volver a posicion inicial
                                     stateLog("Columna llena, intenta nuevamente",log);
@@ -148,7 +148,12 @@ canvas.addEventListener('mousemove', (e)=>{
                             //pintar o despintar si se pasa por los casilleros receptores
                             for(let i=0; i<board.lockers[0].length;i++){
                                 if(board.lockers[0][i].isPointInsided(getX(e),getY(e))){
-                                    board.lockers[0][i].setFill("rgba(0,255,0,0.4)");
+                                    //controla si esta lleno o tiene lugar para informar si se puede ingresar o no ficha
+                                    if(board.getLokerEmptyInColumn(board.lockers[0][i].getColumn(),board.getRows())){
+                                        board.lockers[0][i].setFill("rgba(0,255,0,0.4)");
+                                    }else{
+                                        board.lockers[0][i].setFill("rgba(255,0,0,0.4)");
+                                    }
                                 }else{
                                     board.lockers[0][i].setFill("rgba(0,0,0,0)");
                                 }

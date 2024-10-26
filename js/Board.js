@@ -27,10 +27,10 @@ class Board extends Figure{
             for (let j = 0; j < this.columns; j++) {
               // Instanciamos un nuevo objeto para cada posición
                 if(i===0){//linea de lockers receptores, solo la primera
-                    this.lockers[i][j] = new LokerReceptor(x+widthLoker, y+heightLocker,"#FFFF00",this.context, false, widthLoker, heightLocker,j);  
+                    this.lockers[i][j] = new LokerReceptor(x+widthLoker, y+heightLocker,"rgba(0,0,0,0)",this.context, false, widthLoker, heightLocker,j);  
                     x+=widthLoker+marginX;
                 }else{
-                    this.lockers[i][j] = new Locker(x+widthLoker, y+heightLocker,"#ff0000",this.context, true, widthLoker, heightLocker);
+                    this.lockers[i][j] = new Locker(x+widthLoker, y+heightLocker,"rgba(255,0,0,0.5)",this.context, true, widthLoker, heightLocker);
                     x+=widthLoker+marginX;
                     this.lockers[i][j].setMatrizPosition(i,j);//le asigno posicion de donde se ubica en matriz para calcular logica
                 }
@@ -91,8 +91,7 @@ class Board extends Figure{
     winner(player,casillero){
         let positionMatriz = casillero.getMatrizPosition();
         let contador = 0;
-        let ganador = false;
-        
+            
         //secuencia horizontal
         for(let i =0; i<this.columns;i++){
             //que el casillero no este vacio

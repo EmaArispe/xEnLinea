@@ -15,10 +15,19 @@ canvas{
     align-items: center;
 }
 
+.configuration-game{
+    display: flex;
+    flex-direction: column;
+}
+
+
 .select-game{
+
     position: absolute;
-    top: 40%;
-    left: 40%;
+    z-index: 999999;
+    top: 20%;
+    left: 50%;
+
 }
 
 .hidden{
@@ -68,3 +77,26 @@ h3{
    margin-bottom: 5px;   
 }
 
+
+/*seccion ficha*/
+.select-file{
+    display: flex;
+}
+.select-file .playerA{
+    display: flex;
+}
+.select-file .playerB{
+    display: flex;
+}
+.select-file .imgFicha{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.imgFicha img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
