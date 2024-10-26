@@ -33,14 +33,19 @@ loadImg();
 
 //lectura de pantalla informativa del transcurso del juego
 let log = document.querySelector('.log');
+let prompt = document.querySelector('.prompt');
+
 
 //INICIALIZACION DE TABLERO (setea dimensiones y combinaciones segun parametro 4,5,6,7 en linea)
 let startGame = document.querySelector('.start-game');
-let startGameButton = document.querySelector('#play');
+let setConfigurations = document.querySelector('#play');
 let selectGame = document.querySelector('.configuration-game');
 let selectFile = document.querySelectorAll('.select-file .player img');
+let startGamePlay = document.querySelector('.start');
 
-let previousA, previousB =null;
+let previousA=null;
+let previousB=null;
+let previousType = null;
 //seleccion de ficha personalizada por jugador
 selectFile.forEach(element => {
     
@@ -62,7 +67,6 @@ selectFile.forEach(element => {
             previousB=element;
             filePlayerB="/"+element.src.split('/').pop();
             element.classList.add('selected');
-            console.log(filePlayerB);
             loadImg();
         }
     })
@@ -70,16 +74,36 @@ selectFile.forEach(element => {
 
 
 //esconder pantalla telon al apretar play
-startGameButton.addEventListener('click',()=>{
+setConfigurations.addEventListener('click',()=>{
     startGame.classList.add('hidden');
+    prompt.style.visibility='hidden';
+
 })
 
+//al seleccionar tipo juego mostrar opcion empezar
 selectGame.querySelectorAll('button').forEach(button=>{
     button.addEventListener('click',()=>{
-        setupGame(parseInt(button.id));
-        selectGame.classList.add('hidden');
+        if(previousType!=null){ 
+            previousType.classList.remove('selected');
+        }
+        previousType=button;
+        console.log(previousType.id);        
+        button.classList.add('selected');
+        startGamePlay.style.visibility='visible';
+        
     });
 });
+
+//para empezar el juego se controla que esten seleccionadas las opciones 
+startGamePlay.addEventListener('click',()=>{
+    let size = parseInt(previousType.id);
+    if(previousA!=null&&previousB!=null&&size>0){
+        setupGame(size);
+        prompt.style.visibility='visible';
+        selectGame.classList.add('hidden');
+    }
+})
+
 
 //setea parametros juego segun eleccion
 function setupGame(gameSize){

@@ -6,6 +6,7 @@ body{
 }
 
 canvas{
+    background-color: black;
     border: solid 1px black;
     margin: 0;
     padding: 0;
@@ -40,12 +41,14 @@ canvas{
     font-weight: bolder;
     color: white;
     background-color: black;
-    border: none;
+    border: 3px solid white;
+    
 }
-.start-game button:hover{
+button:hover{
     color: black;
     background-color: white;
-    cursor: pointer ;    
+    cursor: pointer ;   
+    transition: 0.5s ease;
 }
 
 .configuration-game{
@@ -53,20 +56,64 @@ canvas{
     flex-direction: column;
     position: absolute;
     z-index: 1;
-    top: 25%;
-    left: 25%;
+    justify-content: center;
+    align-items: center;
 }
 
 .select-game{
+    margin: 30px;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.option{
+    display: flex;
+    gap:35px;
+    margin: 10px;
+}
 
-    
 
+.ball{
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.option #id{
+    display: flex;
+}
+
+
+button{
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    display: flex;
+    color: white;
+    font-size: 24px;
+    font-weight: bolder;
+    width: 100px;
+    height: 40px;
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 10px;
 }
 
 /*seccion ficha*/
 .select-file{
     display: flex;
-    gap: 30px;/*ver aca*/
+    gap: 70px;/*ver aca*/
+}
+
+.select-file .player{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .select-file .fichas{
@@ -76,13 +123,12 @@ canvas{
 
 .select-file .imgFicha img:hover{
     box-shadow: 0px 0px 50px rgba(255, 255, 255, 1);
+    transition: 0.3s ease;
 }
 
 .selected{
     opacity: 0.5;
 }
-
-
 
 .select-file .imgFicha{
     width: 60px;
@@ -95,7 +141,27 @@ canvas{
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
+}
+.start {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-top: 40px;
+    font-size: 20px;
+    width: 100px;
+    height: 40px;
+    font-weight: normal;
+    visibility: hidden;
+    border: solid 1px;
+    border-radius: 10px;
+}
 
+.start:hover{
+    color: black;
+    background-color: white;
+    cursor: pointer ;   
+    transition: 0.5s ease;
 }
 
 .hidden{
@@ -131,12 +197,14 @@ canvas{
 }
 
 .logStyle{
-    color: blue;
+    color:white;
+    font-weight: bolder;
 }
 
+
 h3{
+   color:white;
    font-weight: bold;
-   color: black;
    margin: 0;
    padding: 0;
    margin-top: 10px;
