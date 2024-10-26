@@ -15,18 +15,19 @@ canvas{
     align-items: center;
 }
 
+
 .configuration-game{
     display: flex;
     flex-direction: column;
-}
-
-
-.select-game{
-
     position: absolute;
     z-index: 999999;
     top: 20%;
     left: 50%;
+}
+
+.select-game{
+
+    
 
 }
 

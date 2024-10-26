@@ -31,7 +31,7 @@ let ganador = false;
 
 //INICIALIZACION DE TABLERO (setea dimensiones y combinaciones segun parametro 4,5,6,7 en linea)
 
-let selectGame = document.querySelector('.select-game');
+let selectGame = document.querySelector('.configuration-game');
 selectGame.querySelectorAll('button').forEach(button=>{
     button.addEventListener('click',()=>{
         setupGame(parseInt(button.id));
