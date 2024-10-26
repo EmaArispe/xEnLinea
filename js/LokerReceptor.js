@@ -3,6 +3,7 @@ class LokerReceptor extends Locker{
     constructor(posX,posY,fill,context,isEmpty,width,height,columnPos){
         super(posX,posY,fill,context,isEmpty,width,height);
         this.columnPos = columnPos;
+        this.fill= "rgba(0,0,0,0)";
     }
 
     draw(){
@@ -19,8 +20,5 @@ class LokerReceptor extends Locker{
     getColumn(){
         return this.columnPos;
     }
-
-
-
 
 }

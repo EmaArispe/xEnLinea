@@ -13,8 +13,8 @@ class Locker extends Figure {
         super.draw();   
         this.context.fillRect(this.posX,this.posY,this.width,this.height);
         this.context.lineWidth=1;
-        this.context.strokeStyle = '#000000'; // Color del borde negro
-        this.context.strokeRect(this.posX, this.posY, this.width, this.height);
+        //this.context.strokeStyle = '#000000'; // Color del borde negro
+        //this.context.strokeRect(this.posX, this.posY, this.width, this.height);
     }    
 
 

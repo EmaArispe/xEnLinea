@@ -148,12 +148,13 @@ canvas.addEventListener('mousemove', (e)=>{
                             //pintar o despintar si se pasa por los casilleros receptores
                             for(let i=0; i<board.lockers[0].length;i++){
                                 if(board.lockers[0][i].isPointInsided(getX(e),getY(e))){
-                                    board.lockers[0][i].setFill("#000000");
+                                    board.lockers[0][i].setFill("rgba(0,255,0,0.4)");
                                 }else{
-                                    board.lockers[0][i].setFill("#FFFF00");
+                                    board.lockers[0][i].setFill("rgba(0,0,0,0)");
                                 }
                             }
                             drawAll();                           
+                            
                         }
                     });
 
