@@ -119,7 +119,7 @@ canvas.addEventListener('mouseup', (e)=>{
                                         }else{
                                             stateLog("es el turno de : "+ game.changeTurn(),log);//se cambia el turno y se informa
                                         }
-                                    },1000);
+                                    },700);
                                     lockerReceptor.setFill("rgba(0,0,0,0)");
                                 }else{
                                     //volver a posicion inicial
