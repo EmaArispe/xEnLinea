@@ -23,12 +23,15 @@ let file = null;//ficha
 let board = null;//tablero
 let game = null;//juego
 let firstTurn = null;//primer turno
-//lectura de pantalla informativa del transcurso del juego
-let log = document.querySelector('.log');
-//ganador
-let ganador = false;
+let ganador = false;//ganador
 let filePlayerA = "/robocop.jpg";//imagenes por default
 let filePlayerB="/iroman.jpg";//imagenes por default
+let imgPlayerA = new Image();
+let imgPlayerB=new Image();
+
+
+//lectura de pantalla informativa del transcurso del juego
+let log = document.querySelector('.log');
 
 //INICIALIZACION DE TABLERO (setea dimensiones y combinaciones segun parametro 4,5,6,7 en linea)
 let startGame = document.querySelector('.start-game');
@@ -44,12 +47,12 @@ selectFile.forEach(element => {
         if(parseInt(element.id)>0 && parseInt(element.id)<=3 ){
             filePlayerA="/"+element.src.split('/').pop();
             console.log(filePlayerA);
-            cargar();
+            loadImg();
         }
         if(parseInt(element.id )>3&&parseInt(element.id )<=6){
             filePlayerB="/"+element.src.split('/').pop();
             console.log(filePlayerB);
-            cargar();
+            loadImg();
         }
     })
 });
@@ -312,14 +315,10 @@ function randomRGB() {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-
-let imgRobocop = new Image();
-let imgIroman=new Image();
-
-
-function cargar(){
-    imgRobocop.src = filePlayerA;
-    imgIroman.src = filePlayerB;
+//carga imagenes
+function loadImg(){
+    imgPlayerA.src = filePlayerA;
+    imgPlayerB.src = filePlayerB;
 }
 
 //carga de fichas en tablero
@@ -327,7 +326,7 @@ function loadFiles(cantFichas){
 
 let heightPartial = 550;
 for (let i = 0; i < cantFichas; i++){
-    let c = new File(marginBoard/2, heightPartial,randomRGB(), ctx, 25,imgRobocop,"robocop");
+    let c = new File(marginBoard/2, heightPartial,randomRGB(), ctx, 25,imgPlayerB,"robocop");
     
     if(i==(cantFichas-2)){
         heightPartial -= 55;    
@@ -341,7 +340,7 @@ for (let i = 0; i < cantFichas; i++){
 
 heightPartial = 550;
 for (let i = 0; i < cantFichas; i++){
-    let c = new File(marginBoard + 820 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgIroman,"ironman");
+    let c = new File(marginBoard + 820 + marginBoard/2, heightPartial,randomRGB(), ctx, 25, imgPlayerA,"ironman");
     
     if(i==(cantFichas-2)){
         heightPartial -= 55;    
