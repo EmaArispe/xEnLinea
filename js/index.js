@@ -86,7 +86,7 @@ function setupGame(gameSize){
 //controla que se seleccione una ficha al turno correspondiente
 canvas.addEventListener('mousedown', (e)=>{
                         let figura = isFile(e);
-                        if(figura != null && figura.isClickable()){
+                        if(figura != null && figura.isClickable() && !ganador){
                             //verifica si clickea ficha al turno correspondiente
                             if(game.isTurn(figura.getPlayer())){
                             file = figura;  
