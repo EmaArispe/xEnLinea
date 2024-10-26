@@ -28,6 +28,7 @@ let filePlayerA = "/robocop.jpg";//imagenes por default
 let filePlayerB="/iroman.jpg";//imagenes por default
 let imgPlayerA = new Image();
 let imgPlayerB=new Image();
+loadImg();
 
 
 //lectura de pantalla informativa del transcurso del juego
@@ -39,18 +40,28 @@ let startGameButton = document.querySelector('#play');
 let selectGame = document.querySelector('.configuration-game');
 let selectFile = document.querySelectorAll('.select-file .player img');
 
-
+let previousA, previousB =null;
 //seleccion de ficha personalizada por jugador
 selectFile.forEach(element => {
-    element.addEventListener('click',()=>{
-        
+    
+    element.addEventListener('click',()=>{    
         if(parseInt(element.id)>0 && parseInt(element.id)<=3 ){
+            if(previousA!=null){
+                previousA.classList.remove('selected');
+            }
+            previousA=element;
             filePlayerA="/"+element.src.split('/').pop();
+            element.classList.add('selected');
             console.log(filePlayerA);
             loadImg();
         }
         if(parseInt(element.id )>3&&parseInt(element.id )<=6){
+            if(previousB!=null){
+                previousB.classList.remove('selected');
+            }
+            previousB=element;
             filePlayerB="/"+element.src.split('/').pop();
+            element.classList.add('selected');
             console.log(filePlayerB);
             loadImg();
         }
@@ -120,7 +131,7 @@ canvas.addEventListener('mousedown', (e)=>{
                         if(figura != null && figura.isClickable()){
                             //verifica si clickea ficha al turno correspondiente
                             if(game.isTurn(figura.getPlayer())){
-                            file = figura;  
+                            file = figura;
                             }else{
                                 stateLog(figura.getPlayer()+" no es tu turno",log);
                             }
