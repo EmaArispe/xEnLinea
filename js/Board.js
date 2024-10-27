@@ -216,7 +216,5 @@ class Board extends Figure{
         }
         return false;
     }
-
-    
-    
+   
 }

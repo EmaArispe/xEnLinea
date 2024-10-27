@@ -48,6 +48,7 @@ class File extends Figure{
     getPlayer(){
         return this.player;
     }
+    
 
     
 }

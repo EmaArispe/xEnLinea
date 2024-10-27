@@ -101,6 +101,9 @@ button:hover {
 }
 
 .configuration-game{
+    height: 400px;
+    width: 600px;
+    border-radius: 10px;
     background-color: black;
     display: flex;
     flex-direction: column;
@@ -108,6 +111,24 @@ button:hover {
     z-index: 1;
     justify-content: center;
     align-items: center;
+}
+
+.reset-game{
+    color: white;
+    height: 400px;
+    width: 600px;
+    border-radius: 10px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.reset-game button{
+    font-size: 16px;
 }
 
 .select-game{

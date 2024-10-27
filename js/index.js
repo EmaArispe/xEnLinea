@@ -19,6 +19,7 @@ const heightBoard=600;
 const marginBoard = (width-widthBoard)/2;
 const marginSupBoard = height-heightBoard;
 
+let size = 4;//default tamanio game
 let file = null;//ficha
 let board = null;//tablero
 let game = null;//juego
@@ -43,10 +44,12 @@ let setConfigurations = document.querySelector('#play');
 let selectGame = document.querySelector('.configuration-game');
 let selectFile = document.querySelectorAll('.select-file .player img');
 let startGamePlay = document.querySelector('.start');
+let resetGame = document.querySelector('.reset-game');
 
 let previousA=null;
 let previousB=null;
 let previousType = null;
+
 //seleccion de ficha personalizada por jugador
 selectFile.forEach(element => {
     
@@ -76,9 +79,9 @@ selectFile.forEach(element => {
 
 //esconder pantalla telon al apretar play
 setConfigurations.addEventListener('click',()=>{
-    startGame.classList.add('hidden');
     prompt.style.visibility='hidden';
-    backgroundMusic.play();
+    startGame.classList.add('hidden');
+    //backgroundMusic.play();
 
 })
 
@@ -98,20 +101,48 @@ selectGame.querySelectorAll('button').forEach(button=>{
 
 //para empezar el juego se controla que esten seleccionadas las opciones 
 startGamePlay.addEventListener('click',()=>{
-    let size = parseInt(previousType.id);
+    size = parseInt(previousType.id);
     if(previousA!=null&&previousB!=null&&size>0){
         setupGame(size);
+        resetGame.classList.add('hidden');
         prompt.style.visibility='visible';
-        //selectGame.classList.add('hidden');
         // Agrega la clase 'fade-out' para la transición de opacidad
         selectGame.classList.add('fade-out');
-        
         // Espera a que termine la transición antes de aplicar 'hidden'
         setTimeout(() => {
             selectGame.classList.add('hidden');
         }, 500); // Espera 500 ms o lo mismo que la duración de la transición
         
     }
+})
+
+resetGame.querySelectorAll('button').forEach(button=>{
+    button.addEventListener('click',()=>{
+        if(button.id === "reset"){
+            console.log("reset");
+            ganador=false;
+            figuras=[];
+            clearCanvas();
+            setupGame(size);
+            resetGame.classList.add('hidden');
+            prompt.style.visibility='visible';
+            // Agrega la clase 'fade-out' para la transición de opacidad
+            selectGame.classList.add('fade-out');
+            // Espera a que termine la transición antes de aplicar 'hidden'
+            setTimeout(() => {
+                selectGame.classList.add('hidden');
+            }, 500); // Espera 500 ms o lo mismo que la duración de la transición
+        }
+        if(button.id === "exit"){
+            console.log("exit");
+            ganador=false;
+            figuras=[];
+            clearCanvas();
+            selectGame.classList.remove('fade-out');
+            selectGame.classList.remove('hidden');
+            startGame.classList.remove('hidden');
+        }
+    })
 })
 
 //setea parametros juego segun eleccion
@@ -195,6 +226,10 @@ canvas.addEventListener('mouseup', (e)=>{
                                         ganador = board.winner(player,emptyLocker);                                   
                                         if(ganador){
                                             stateLog("GANADOR!!: "+player,log);
+                                            //selectGame.classList.remove('hidden');
+                                            //selectGame.classList.remove('fade-out');
+                                            resetGame.classList.remove('hidden');
+                                            drawAll();
                                         }else{
                                             stateLog("es el turno de : "+ game.changeTurn(),log);//se cambia el turno y se informa
                                         }
@@ -353,6 +388,7 @@ function getY(event){
 function clearCanvas(){
     ctx.fillStyle = backgroudCanvas;
     ctx.fillRect(0,0,width,height);
+    
 }
 
 //colores aleatorios
@@ -427,5 +463,7 @@ function stateLog(message,log){
     log.appendChild(parrafo);   
     parrafo.scrollIntoView();
 }
-    
+
 }
+
+
