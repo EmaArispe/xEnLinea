@@ -100,7 +100,14 @@ startGamePlay.addEventListener('click',()=>{
     if(previousA!=null&&previousB!=null&&size>0){
         setupGame(size);
         prompt.style.visibility='visible';
-        selectGame.classList.add('hidden');
+        //selectGame.classList.add('hidden');
+        // Agrega la clase 'fade-out' para la transición de opacidad
+        selectGame.classList.add('fade-out');
+        
+        // Espera a que termine la transición antes de aplicar 'hidden'
+        setTimeout(() => {
+            selectGame.classList.add('hidden');
+        }, 500); // Espera 500 ms o lo mismo que la duración de la transición
     }
 })
 

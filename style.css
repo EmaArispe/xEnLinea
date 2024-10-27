@@ -22,6 +22,12 @@ canvas{
     border: solid 1px red;
 }
 
+.game-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .start-game{
     display: flex;
     width: 1200px;
@@ -32,6 +38,7 @@ canvas{
     color: white;
     z-index: 99999;
     position: absolute;
+    overflow: hidden;
 }
 .start-game button{
     border-radius: 50%;
@@ -42,8 +49,40 @@ canvas{
     color: white;
     background-color: black;
     border: 3px solid white;
-    animation: blink 0.9s infinite ease;    
+    animation: blink 0.9s infinite ease; 
+    position: absolute;
+    z-index: 999999;   
 }
+
+.vsRobo{
+    height: 100%;
+    width: 100%;
+    transform: translateX(-100%);
+    transition: 0.5s ease;
+    opacity: 0.8;
+}
+
+.vsIro{
+    height: 100%;
+    width: 100%;
+    transform: translateX(100%);
+    transition: 0.5s ease;
+    opacity: 0.8;
+}
+
+#play:hover ~ .vsRobo{
+    transform: translateX(100%);
+    transition: 0.5s ease;
+    
+}
+
+#play:hover ~ .vsIro{
+    transition: 0.5s ease;
+    transform: translateX(-100%);
+    
+}
+
+
 
 @keyframes blink{
     0%{
@@ -54,7 +93,7 @@ canvas{
     }
 }
 
-button:hover{
+button:hover {
     color: black;
     background-color: white;
     cursor: pointer ;   
@@ -62,6 +101,7 @@ button:hover{
 }
 
 .configuration-game{
+    background-color: black;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -172,6 +212,11 @@ button{
 
 .hidden{
     display: none;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.9s ease; /* Ajusta la duración (0.5s) como prefieras */
 }
 
 /*seccion pantalla informativa*/
