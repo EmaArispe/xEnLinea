@@ -29,7 +29,8 @@ let filePlayerB="/iroman.jpg";//imagenes por default
 let imgPlayerA = new Image();
 let imgPlayerB=new Image();
 loadImg();
-
+//musica fondo
+const backgroundMusic = document.getElementById('backgroundMusic');
 
 //lectura de pantalla informativa del transcurso del juego
 let log = document.querySelector('.log');
@@ -77,6 +78,7 @@ selectFile.forEach(element => {
 setConfigurations.addEventListener('click',()=>{
     startGame.classList.add('hidden');
     prompt.style.visibility='hidden';
+    backgroundMusic.play();
 
 })
 
@@ -108,9 +110,9 @@ startGamePlay.addEventListener('click',()=>{
         setTimeout(() => {
             selectGame.classList.add('hidden');
         }, 500); // Espera 500 ms o lo mismo que la duración de la transición
+        
     }
 })
-
 
 //setea parametros juego segun eleccion
 function setupGame(gameSize){
