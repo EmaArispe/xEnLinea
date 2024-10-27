@@ -225,6 +225,7 @@ canvas.addEventListener('mouseup', (e)=>{
                                     setTimeout(()=>{     
                                         ganador = board.winner(player,emptyLocker);                                   
                                         if(ganador){
+                                            clearLog(log);
                                             stateLog("GANADOR!!: "+player,log);
                                             //selectGame.classList.remove('hidden');
                                             //selectGame.classList.remove('fade-out');
@@ -462,6 +463,10 @@ function stateLog(message,log){
     //log.removeChild(log.firstChild);
     log.appendChild(parrafo);   
     parrafo.scrollIntoView();
+}
+
+function clearLog(log){
+    log.innerHTML = '';
 }
 
 }
