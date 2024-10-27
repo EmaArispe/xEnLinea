@@ -81,7 +81,7 @@ selectFile.forEach(element => {
 setConfigurations.addEventListener('click',()=>{
     prompt.style.visibility='hidden';
     startGame.classList.add('hidden');
-    //backgroundMusic.play();
+    backgroundMusic.play();
 
 })
 
