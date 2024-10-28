@@ -45,6 +45,9 @@ let selectGame = document.querySelector('.configuration-game');
 let selectFile = document.querySelectorAll('.select-file .player img');
 let startGamePlay = document.querySelector('.start');
 let resetGame = document.querySelector('.reset-game');
+let winner = document.querySelector('.winner');
+let iroWinner = document.querySelector('.imgWinnerI');
+let roboWinner = document.querySelector('.imgWinnerR');
 
 let previousA=null;
 let previousB=null;
@@ -106,6 +109,8 @@ startGamePlay.addEventListener('click',()=>{
         setupGame(size);
         resetGame.classList.add('hidden');
         prompt.style.visibility='visible';
+        iroWinner.classList.remove('hidden');
+        roboWinner.classList.remove('hidden');
         // Agrega la clase 'fade-out' para la transición de opacidad
         selectGame.classList.add('fade-out');
         // Espera a que termine la transición antes de aplicar 'hidden'
@@ -124,6 +129,8 @@ resetGame.querySelectorAll('button').forEach(button=>{
             figuras=[];
             clearCanvas();
             setupGame(size);
+            iroWinner.classList.remove('hidden');
+            roboWinner.classList.remove('hidden');
             resetGame.classList.add('hidden');
             prompt.style.visibility='visible';
             // Agrega la clase 'fade-out' para la transición de opacidad
@@ -226,9 +233,14 @@ canvas.addEventListener('mouseup', (e)=>{
                                         ganador = board.winner(player,emptyLocker);                                   
                                         if(ganador){
                                             clearLog(log);
-                                            stateLog("GANADOR!!: "+player,log);
-                                            //selectGame.classList.remove('hidden');
-                                            //selectGame.classList.remove('fade-out');
+                                            stateLog("GANADOR!!: "+player.toUpperCase(),log);
+                                            winner.innerHTML="GANADOR: "+player.toUpperCase();
+                                            if(player === "robocop"){
+                                                iroWinner.classList.add('hidden');
+                                            }else{
+                                                roboWinner.classList.add('hidden');
+                                            }
+                                            //winner.classList.add('imgWinner');
                                             resetGame.classList.remove('hidden');
                                             drawAll();
                                         }else{

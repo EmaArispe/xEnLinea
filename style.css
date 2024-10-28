@@ -101,7 +101,7 @@ button:hover {
 }
 
 .configuration-game{
-    height: 400px;
+    height: 600px;
     width: 600px;
     border-radius: 10px;
     background-color: black;
@@ -116,19 +116,42 @@ button:hover {
 .reset-game{
     color: white;
     height: 400px;
-    width: 600px;
+    width: 350px;
     border-radius: 10px;
     background-color: black;
     display: flex;
     flex-direction: column;
     position: absolute;
     z-index: 1;
-    justify-content: center;
     align-items: center;
+    justify-content: space-evenly;
 }
+
+.reset-game-options{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.winner{
+    font-size: 26px;
+    padding:0;
+    margin: 0;
+}
+
 
 .reset-game button{
     font-size: 16px;
+}
+
+.imgWinnerR{
+    width: 250px;
+    height: 200px;
+}
+.imgWinnerI{
+    width: 250px;
+    height: 200px;
 }
 
 .select-game{
@@ -171,11 +194,12 @@ button{
 /*seccion ficha*/
 .select-file{
     display: flex;
-    gap: 70px;/*ver aca*/
+    gap: 50px;/*ver aca*/
 }
 
 .select-file .player{
     color: white;
+    gap: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -193,12 +217,12 @@ button{
 }
 
 .selected{
-    opacity: 0.5;
+    opacity: 0.2;
 }
 
 .select-file .imgFicha{
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
 }
 
