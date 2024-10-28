@@ -32,6 +32,10 @@ let imgPlayerB=new Image();
 loadImg();
 //musica fondo
 const backgroundMusic = document.getElementById('backgroundMusic');
+//contador
+let timeLeft = 250; // Time in seconds
+const countdownDiv = document.querySelector(".countdown");
+
 
 //lectura de pantalla informativa del transcurso del juego
 let log = document.querySelector('.log');
@@ -480,6 +484,18 @@ function stateLog(message,log){
 function clearLog(log){
     log.innerHTML = '';
 }
+
+
+//contador
+const countdown = setInterval(() => {
+  countdownDiv.innerHTML = timeLeft; 
+  timeLeft--;
+
+  if (timeLeft < 0) {
+    clearInterval(countdown); // Stop the countdown
+    countdownDiv.innerHTML = "SE ACABO!";
+  }
+}, 1000); // Update every second
 
 }
 
