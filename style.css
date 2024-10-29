@@ -6,11 +6,9 @@ body{
 }
 
 canvas{
-    background-color: black;
     border: solid 1px black;
     margin: 0;
     padding: 0;
-    
 }
 
 .game-container {
@@ -102,7 +100,7 @@ button:hover {
 
 .configuration-game{
     height: 600px;
-    width: 600px;
+    width: 1200px;
     border-radius: 10px;
     background-color: black;
     display: flex;
@@ -150,6 +148,10 @@ button:hover {
     height: 200px;
 }
 .imgWinnerI{
+    width: 250px;
+    height: 200px;
+}
+.imgDeuce{
     width: 250px;
     height: 200px;
 }

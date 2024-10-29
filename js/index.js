@@ -9,9 +9,16 @@ let ctx = canvas.getContext("2d");
 const width = canvas.width;
 const height = canvas.height;
 let figuras = [];
-
 const rect = canvas.getBoundingClientRect()//constante para tomar distancia y calcular x/y
-const backgroudCanvas = '#9B9B9B'
+//const backgroudCanvas = '#9B9B9B';
+
+let img = new Image();
+img.src= "/fondo-ironman-robocop-2.jpg";
+img.onload = () => {
+    ctx.drawImage(img, 0, 0, width, height);
+};
+
+
 
 //dimensiones board
 const widthBoard=820;
@@ -29,7 +36,7 @@ let filePlayerA = "/robocop.jpg";//imagenes por default
 let filePlayerB="/iroman.jpg";//imagenes por default
 let imgPlayerA = new Image();
 let imgPlayerB=new Image();
-loadImg();
+//loadImg();
 //musica fondo
 const backgroundMusic = document.getElementById('backgroundMusic');
 //contador
@@ -52,6 +59,7 @@ let resetGame = document.querySelector('.reset-game');
 let winner = document.querySelector('.winner');
 let iroWinner = document.querySelector('.imgWinnerI');
 let roboWinner = document.querySelector('.imgWinnerR');
+let deuce = document.querySelector('.imgDeuce');
 
 let previousA=null;
 let previousB=null;
@@ -88,7 +96,7 @@ selectFile.forEach(element => {
 setConfigurations.addEventListener('click',()=>{
     prompt.style.visibility='hidden';
     startGame.classList.add('hidden');
-    backgroundMusic.play();
+    //backgroundMusic.play();
 
 })
 
@@ -115,6 +123,7 @@ startGamePlay.addEventListener('click',()=>{
         prompt.style.visibility='visible';
         iroWinner.classList.remove('hidden');
         roboWinner.classList.remove('hidden');
+        deuce.classList.add('hidden');
         // Agrega la clase 'fade-out' para la transición de opacidad
         selectGame.classList.add('fade-out');
         // Espera a que termine la transición antes de aplicar 'hidden'
@@ -163,13 +172,13 @@ function setupGame(gameSize){
         case 4:
             columns=8;
             rows = 7; 
-            files = 21;
+            files = 24;
             combinations=4;
             break;
         case 5:
             columns=9;
             rows = 7; 
-            files = 24;
+            files = 27;
             combinations=5
             break;
         case 6:
@@ -181,7 +190,7 @@ function setupGame(gameSize){
         case 7:
             columns=10;
             rows = 8; 
-            files = 32;
+            files = 35;
             combinations=7;
             break;
         default:
@@ -194,13 +203,10 @@ function setupGame(gameSize){
     firstTurn=game.setFirstTurn();
     stateLog("Comienza jugando: "+firstTurn,log);
     board.createLokers();
-    //clearCanvas();
     board.draw();
-    //cargar las fichas despues de un tiempo, para que se creen encima del board (tarda en cargar la imagen)
-    console.log("antes de cargar fichas");
-    setTimeout(loadFiles(files), 1000); //no esta dando bola al tiempo
-    console.log("despues de cargar fichas");
-    //loadFiles(files);//carga de fichas
+    loadFiles(files);
+    iniciarCuentaRegresiva();
+    
 };
 
 //EVENTOS DE MOUSE   
@@ -241,16 +247,22 @@ canvas.addEventListener('mouseup', (e)=>{
                                             winner.innerHTML="GANADOR: "+player.toUpperCase();
                                             if(player === "robocop"){
                                                 iroWinner.classList.add('hidden');
+                                                deuce.classList.add('hidden');
                                             }else{
                                                 roboWinner.classList.add('hidden');
+                                                deuce.classList.add('hidden');
                                             }
                                             //winner.classList.add('imgWinner');
                                             resetGame.classList.remove('hidden');
+                                            resetearCuentaRegresiva();
                                             drawAll();
+                                        }else if(board.isDeuce()){//verificar que no sea la ultima ficha(empate)
+                                             roboWinner.classList.add('hidden');
+                                             iroWinner.classList.add('hidden');
                                         }else{
                                             stateLog("es el turno de : "+ game.changeTurn(),log);//se cambia el turno y se informa
                                         }
-                                    },700);
+                                    },1500);
                                     lockerReceptor.setFill("rgba(0,0,0,0)");
                                 }else{
                                     //volver a posicion inicial
@@ -403,9 +415,8 @@ function getY(event){
 
 //borrar canvas
 function clearCanvas(){
-    ctx.fillStyle = backgroudCanvas;
-    ctx.fillRect(0,0,width,height);
-    
+    ctx.clearRect(0,0,width,height); 
+    ctx.drawImage(img, 0, 0, width, height);   
 }
 
 //colores aleatorios
@@ -486,16 +497,48 @@ function clearLog(log){
 }
 
 
-//contador
-const countdown = setInterval(() => {
-  countdownDiv.innerHTML = timeLeft; 
-  timeLeft--;
+let tiempo = 100; // Tiempo inicial en segundos
+let cuentaRegresiva; // Variable para almacenar el ID del intervalo
 
-  if (timeLeft < 0) {
-    clearInterval(countdown); // Stop the countdown
-    countdownDiv.innerHTML = "SE ACABO!";
-  }
-}, 1000); // Update every second
+// Función que inicia o reinicia el temporizador
+function iniciarCuentaRegresiva() {
+    // Si hay un intervalo en ejecución, lo detiene
+    clearInterval(cuentaRegresiva);
+    
+    // Reinicia el tiempo a 10 segundos (o el tiempo deseado)
+    tiempo = 100;
+    
+    // Inicia un nuevo intervalo
+    cuentaRegresiva = setInterval(() => {
+    
+    countdownDiv.innerHTML = tiempo;
+    tiempo--;
+
+        // Detener el temporizador cuando llegue a 0
+        if (tiempo < 0) {
+            clearInterval(cuentaRegresiva);
+            console.log("¡Tiempo terminado!");
+        }
+    }, 1000); // Actualiza cada 1 segundo
+}
+
+// Función para resetear la cuenta regresiva
+function resetearCuentaRegresiva() {
+    iniciarCuentaRegresiva();
+}
+
+// Ejemplo de uso
+iniciarCuentaRegresiva(); // Inicia la cuenta regresiva
+
+
+
+
+
+
+
+
+
+
 
 }
 

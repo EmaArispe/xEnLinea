@@ -10,8 +10,8 @@ class Board extends Figure{
         this.combinations=combinations;
         
         // Crear y cargar la imagen
-        this.backgroundImage = new Image();
-        this.backgroundImage.src = '/fondo-ironman-robocop-2.jpg';
+        //this.backgroundImage = new Image();
+        //this.backgroundImage.src = '/fondo-ironman-robocop-2.jpg';
     }
 
     //creacion dinamica de lokers segun tamanioo juego
@@ -47,7 +47,7 @@ class Board extends Figure{
     //dibuja la matriz de lockers
     draw(){
 // Comprobar si la imagen está cargada
-    if (this.backgroundImage.complete) {
+    /*if (this.backgroundImage.complete) {
         const imageAspectRatio = this.backgroundImage.width / this.backgroundImage.height;
         const boardAspectRatio = this.width / this.height;
         
@@ -79,8 +79,8 @@ class Board extends Figure{
         this.backgroundImage.onload = () => {
             this.draw();
         };
-    }
-        //super.draw();
+    }*/
+        super.draw();
         //this.context.fillRect(this.posX,this.posY,this.width,this.height);
         for(let i = 0; i < this.lockers.length;i++){
             for(let j = 0; j<this.lockers[i].length;j++){
@@ -215,6 +215,16 @@ class Board extends Figure{
             posColumnTope-=1;
         }
         return false;
+    }
+
+
+    isDeuce(){
+        for(let i=0; i<this.lockers[1];i++){
+            if(this.lockers[1][i].getFicha==null){
+                return false;
+            }
+        }
+        return true;
     }
    
 }
