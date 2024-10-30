@@ -66,6 +66,7 @@ let previousA=null;
 let previousB=null;
 let previousType = null;
 
+resetGame.classList.add('hidden');
 //seleccion de ficha personalizada por jugador
 selectFile.forEach(element => {
     
@@ -97,6 +98,7 @@ selectFile.forEach(element => {
 setConfigurations.addEventListener('click',()=>{
     prompt.style.visibility='hidden';
     startGame.classList.add('hidden');
+    resetGame.classList.add('hidden');
     //backgroundMusic.play();
 
 })
@@ -532,7 +534,7 @@ function iniciarCuentaRegresiva() {
 
 // Función para resetear la cuenta regresiva
 function resetearCuentaRegresiva() {
-    iniciarCuentaRegresiva();
+    countdownDiv.innerHTML= "";
 }
 
 // Ejemplo de uso
