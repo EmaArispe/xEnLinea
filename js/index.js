@@ -60,6 +60,7 @@ let winner = document.querySelector('.winner');
 let iroWinner = document.querySelector('.imgWinnerI');
 let roboWinner = document.querySelector('.imgWinnerR');
 let deuce = document.querySelector('.imgDeuce');
+//deuce.classList.add('hidden');
 
 let previousA=null;
 let previousB=null;
@@ -256,13 +257,19 @@ canvas.addEventListener('mouseup', (e)=>{
                                             resetGame.classList.remove('hidden');
                                             resetearCuentaRegresiva();
                                             drawAll();
-                                        }else if(board.isDeuce()){//verificar que no sea la ultima ficha(empate)
+                                        }else if(board.isDeuce()||tiempo==0){//verificar que no sea la ultima ficha(empate)
+                                             clearLog(log);
+                                             stateLog("EMPATE",log);
+                                             winner.innerHTML="EMPATE";
                                              roboWinner.classList.add('hidden');
                                              iroWinner.classList.add('hidden');
+                                             deuce.classList.remove('hidden');
+                                             resetGame.classList.remove('hidden');
+                                             resetearCuentaRegresiva();
                                         }else{
                                             stateLog("es el turno de : "+ game.changeTurn(),log);//se cambia el turno y se informa
                                         }
-                                    },1500);
+                                    },1000);
                                     lockerReceptor.setFill("rgba(0,0,0,0)");
                                 }else{
                                     //volver a posicion inicial
@@ -497,7 +504,7 @@ function clearLog(log){
 }
 
 
-let tiempo = 100; // Tiempo inicial en segundos
+let tiempo = 10; // Tiempo inicial en segundos
 let cuentaRegresiva; // Variable para almacenar el ID del intervalo
 
 // Función que inicia o reinicia el temporizador
@@ -506,18 +513,19 @@ function iniciarCuentaRegresiva() {
     clearInterval(cuentaRegresiva);
     
     // Reinicia el tiempo a 10 segundos (o el tiempo deseado)
-    tiempo = 100;
+    tiempo = 10;
     
     // Inicia un nuevo intervalo
     cuentaRegresiva = setInterval(() => {
     
-    countdownDiv.innerHTML = tiempo;
     tiempo--;
+    countdownDiv.innerHTML = tiempo;
 
         // Detener el temporizador cuando llegue a 0
-        if (tiempo < 0) {
+        if (tiempo <= 0) {
             clearInterval(cuentaRegresiva);
             console.log("¡Tiempo terminado!");
+            countdownDiv.innerHTML = "¡Tiempo terminado!";
         }
     }, 1000); // Actualiza cada 1 segundo
 }
@@ -529,15 +537,6 @@ function resetearCuentaRegresiva() {
 
 // Ejemplo de uso
 iniciarCuentaRegresiva(); // Inicia la cuenta regresiva
-
-
-
-
-
-
-
-
-
 
 
 }

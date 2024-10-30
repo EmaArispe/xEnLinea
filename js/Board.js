@@ -136,6 +136,7 @@ class Board extends Figure{
             if(this.lockers[positionMatriz.row][i].getFicha()!=null){
                 //verificar que sea el player
                 if(this.lockers[positionMatriz.row][i].getFicha().getPlayer()===player){
+                    console.log(positionMatriz.row+" "+i);
                     contador++;
                     if(contador==this.combinations){
                         return true;
@@ -143,7 +144,8 @@ class Board extends Figure{
                 }else{//si no es se corta la secuencia
                     contador=0;
                 }
-
+            }else{
+                contador=0;
             }
         }
         contador = 0;
@@ -160,6 +162,8 @@ class Board extends Figure{
                     contador=0;
                 }
 
+            }else{
+                contador=0; 
             }
         }
         
@@ -219,8 +223,10 @@ class Board extends Figure{
 
 
     isDeuce(){
-        for(let i=0; i<this.lockers[1];i++){
-            if(this.lockers[1][i].getFicha==null){
+        for(let i=0; i<this.lockers[1].length;i++){
+            
+            if(this.lockers[1][i].getFicha()==null){
+
                 return false;
             }
         }
